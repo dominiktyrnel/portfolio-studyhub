@@ -1,0 +1,273 @@
+/* ==========================================
+   TAILWIND 4 UTILITY EXTENSIONS
+   Modern CSS utilities leveraging new browser features
+   ========================================== */
+
+@layer utilities {
+
+    /* ==========================================
+       CONTAINER QUERIES
+       Use: cq-container parent, then cq-sm:, cq-md:, cq-lg: inside
+       ========================================== */
+
+    .cq-container {
+        container-type: inline-size;
+    }
+
+    .cq-container-normal {
+        container-type: normal;
+    }
+
+    /* Container query breakpoint utilities */
+    @container (min-width: 320px) {
+        .cq-xs-block {
+            display: block;
+        }
+
+        .cq-xs-flex {
+            display: flex;
+        }
+
+        .cq-xs-grid {
+            display: grid;
+        }
+
+        .cq-xs-hidden {
+            display: none;
+        }
+    }
+
+    @container (min-width: 480px) {
+        .cq-sm-block {
+            display: block;
+        }
+
+        .cq-sm-flex {
+            display: flex;
+        }
+
+        .cq-sm-grid {
+            display: grid;
+        }
+
+        .cq-sm-grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .cq-sm-hidden {
+            display: none;
+        }
+
+        .cq-sm-flex-row {
+            flex-direction: row;
+        }
+    }
+
+    @container (min-width: 640px) {
+        .cq-md-block {
+            display: block;
+        }
+
+        .cq-md-flex {
+            display: flex;
+        }
+
+        .cq-md-grid {
+            display: grid;
+        }
+
+        .cq-md-grid-cols-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .cq-md-grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .cq-md-hidden {
+            display: none;
+        }
+
+        .cq-md-flex-row {
+            flex-direction: row;
+        }
+    }
+
+    @container (min-width: 768px) {
+        .cq-lg-block {
+            display: block;
+        }
+
+        .cq-lg-flex {
+            display: flex;
+        }
+
+        .cq-lg-grid {
+            display: grid;
+        }
+
+        .cq-lg-grid-cols-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .cq-lg-grid-cols-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .cq-lg-hidden {
+            display: none;
+        }
+    }
+
+    /* ==========================================
+       TEXT WRAPPING - Modern Typography
+       ========================================== */
+
+    .text-balance {
+        text-wrap: balance;
+    }
+
+    .text-pretty {
+        text-wrap: pretty;
+    }
+
+    .text-stable {
+        text-wrap: stable;
+    }
+
+    /* ==========================================
+       HAS-* SELECTORS - Parent-aware styling
+       ========================================== */
+
+    .has-focus:has(:focus) {
+        outline: 2px solid var(--study-accent, #C59D5F);
+        outline-offset: 2px;
+    }
+
+    .has-focus-within:has(:focus-within) {
+        box-shadow: 0 0 0 3px rgba(197, 157, 95, 0.3);
+    }
+
+    .has-checked:has(:checked) {
+        background-color: var(--study-accent, #C59D5F);
+        color: white;
+    }
+
+    .has-invalid:has(:invalid) {
+        border-color: #ef4444;
+    }
+
+    .has-img:has(img) {
+        padding: 0;
+    }
+
+    /* ==========================================
+       NOT-* SELECTORS - Exclusion styling
+       ========================================== */
+
+    .not-first:not(:first-child) {
+        margin-top: 1rem;
+    }
+
+    .not-last:not(:last-child) {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--study-border, #E8E0D5);
+    }
+
+    .not-only:not(:only-child) {
+        flex: 1;
+    }
+
+    .not-empty:not(:empty) {
+        display: block;
+    }
+
+    /* ==========================================
+       INERT STATE - Disabled sections
+       ========================================== */
+
+    .inert-style:where([inert], [inert] *) {
+        opacity: 0.5;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    /* ==========================================
+       FOCUS VISIBLE - Modern focus rings
+       ========================================== */
+
+    .focus-ring:focus-visible {
+        outline: 2px solid var(--study-accent, #C59D5F);
+        outline-offset: 2px;
+    }
+
+    .focus-ring-inset:focus-visible {
+        outline: 2px solid var(--study-accent, #C59D5F);
+        outline-offset: -2px;
+    }
+
+    /* ==========================================
+       SCROLLBAR UTILITIES
+       ========================================== */
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar-thin {
+        scrollbar-width: thin;
+    }
+
+    /* ==========================================
+       ANIMATION UTILITIES
+       ========================================== */
+
+    .animate-fade-in {
+        animation: var(--animate-fade-in);
+    }
+
+    .animate-slide-up {
+        animation: var(--animate-slide-up);
+    }
+
+    .animate-pulse-slow {
+        animation: var(--animate-pulse-slow);
+    }
+
+    .animate-bounce-subtle {
+        animation: var(--animate-bounce-subtle);
+    }
+
+    /* ==========================================
+       LEGACY LAYOUT UTILITIES
+       (kept for backwards compatibility)
+       ========================================== */
+
+    .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 var(--space-md);
+        position: relative;
+    }
+
+}
+
+/* Responsive utilities (viewport-based) */
+@media (min-width: 768px) {
+    .md\:flex-row {
+        flex-direction: row;
+    }
+
+    .md\:grid-cols-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .md\:grid-cols-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

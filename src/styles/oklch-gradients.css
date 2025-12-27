@@ -1,0 +1,53 @@
+/* OKLCH Colors & Advanced Gradients - Tailwind 4 */
+
+@layer utilities {
+
+    /* OKLCH Color Utilities - Modern perceptual color space */
+    .text-oklch-primary {
+        color: oklch(0.65 0.18 250);
+    }
+
+    .bg-oklch-primary {
+        background: oklch(0.65 0.18 250);
+    }
+
+    .text-oklch-accent {
+        color: oklch(0.75 0.15 160);
+    }
+
+    .bg-oklch-accent {
+        background: oklch(0.75 0.15 160);
+    }
+
+    /* Advanced Gradients with OKLCH */
+    .gradient-oklch-blue {
+        background: linear-gradient(135deg,
+                oklch(0.70 0.15 250) 0%,
+                oklch(0.50 0.20 260) 100%);
+    }
+
+    .gradient-oklch-accent {
+        background: linear-gradient(135deg,
+                oklch(0.75 0.12 180) 0%,
+                oklch(0.65 0.18 200) 100%);
+    }
+
+    /* Mesh Gradients */
+    .gradient-mesh-study {
+        background:
+            radial-gradient(at 0% 0%, oklch(0.85 0.08 140) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, oklch(0.80 0.10 200) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, oklch(0.75 0.12 250) 0px, transparent 50%),
+            radial-gradient(at 0% 100%, oklch(0.82 0.09 160) 0px, transparent 50%);
+    }
+
+    /* Conic Gradients */
+    .gradient-conic-premium {
+        background: conic-gradient(from 180deg at 50% 50%,
+                oklch(0.70 0.15 250) 0deg,
+                oklch(0.75 0.15 200) 90deg,
+                oklch(0.72 0.18 180) 180deg,
+                oklch(0.68 0.16 220) 270deg,
+                oklch(0.70 0.15 250) 360deg);
+    }
+}

@@ -1,0 +1,53 @@
+/* 3D Hover Effects - Tailwind 4 Advanced Features */
+
+@layer utilities {
+
+    /* 3D Card Hover - Portfolio Cards */
+    .card-3d-hover {
+        transform-style: preserve-3d;
+        transition: transform 0.3s ease;
+    }
+
+    .card-3d-hover:hover {
+        transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-4px);
+    }
+
+    /* Subtle 3D Tilt on Hover */
+    .hover-tilt {
+        transform-style: preserve-3d;
+        transition: transform 0.2s ease;
+    }
+
+    .hover-tilt:hover {
+        transform: perspective(800px) rotateX(1deg) rotateY(1deg);
+    }
+
+    /* 3D Button Press Effect */
+    .btn-3d {
+        transform-style: preserve-3d;
+        transition: all 0.15s ease;
+    }
+
+    .btn-3d:hover {
+        transform: perspective(600px) translateZ(4px);
+    }
+
+    .btn-3d:active {
+        transform: perspective(600px) translateZ(-2px);
+    }
+
+    /* 3D Depth Shadow for Cards */
+    .shadow-3d {
+        box-shadow:
+            0 1px 2px rgba(0, 0, 0, 0.05),
+            0 4px 8px rgba(0, 0, 0, 0.05),
+            0 8px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .shadow-3d-hover:hover {
+        box-shadow:
+            0 4px 8px rgba(0, 0, 0, 0.08),
+            0 8px 16px rgba(0, 0, 0, 0.08),
+            0 16px 32px rgba(0, 0, 0, 0.08);
+    }
+}

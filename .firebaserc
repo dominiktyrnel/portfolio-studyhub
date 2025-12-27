@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "tyrnel-web-portfolio"
+  },
+  "targets": {
+    "tyrnel-web-portfolio": {
+      "hosting": {
+        "main": [
+          "tyrnel-web-portfolio"
+        ],
+        "dominik": [
+          "dominik-tyrnel"
+        ]
+      }
+    }
+  }
+}

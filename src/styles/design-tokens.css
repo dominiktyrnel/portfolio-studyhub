@@ -1,0 +1,80 @@
+/* Design Tokens - Unified Theme System */
+/* Following AI_GUIDE Rule #3: Professional standard, długoterminové řešení */
+
+@theme {
+    /* ==========================================
+     SPACING SYSTEM
+     ========================================== */
+
+    --space-section: 6rem;
+    /* 96px - Between major sections */
+    --space-component: 2rem;
+    /* 32px - Between components */
+    --space-element: 1rem;
+    /* 16px - Between elements */
+    --space-compact: 0.5rem;
+    /* 8px - Tight spacing */
+
+    /* ==========================================
+     TYPOGRAPHY SCALE (Responsive)
+     ========================================== */
+
+    --text-display: clamp(2rem, 5vw, 3rem);
+    /* 32-48px */
+    --text-h1: clamp(1.5rem, 4vw, 2rem);
+    /* 24-32px */
+    --text-h2: clamp(1.25rem, 3vw, 1.5rem);
+    /* 20-24px */
+    --text-body: 1rem;
+    /* 16px */
+    --text-small: 0.875rem;
+    /* 14px */
+    --text-tiny: 0.75rem;
+    /* 12px */
+
+    /* ==========================================
+     SHADOWS (Elevation)
+     ========================================== */
+
+    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+
+    /* ==========================================
+     BORDER RADIUS
+     ========================================== */
+
+    --radius-sm: 0.375rem;
+    /* 6px */
+    --radius-md: 0.5rem;
+    /* 8px */
+    --radius-lg: 0.75rem;
+    /* 12px */
+    --radius-xl: 1rem;
+    /* 16px */
+    --radius-2xl: 1.5rem;
+    /* 24px */
+    --radius-full: 9999px;
+    /* Pill shape */
+
+    /* ==========================================
+     TRANSITIONS (Timing)
+     ========================================== */
+
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-elastic: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    /* ==========================================
+     ANIMATIONS (Durations)
+     ========================================== */
+
+    --anim-fade: 300ms;
+    --anim-slide: 500ms;
+    --anim-scale: 300ms;
+    --anim-blur: 300ms;
+    --anim-stagger-delay: 50ms;
+}

@@ -1,0 +1,20 @@
+/* Auto-growing Textarea Utilities - Tailwind 4 */
+
+/* Using CSS field-sizing for auto-growing textareas */
+.textarea-auto-grow {
+    field-sizing: content;
+    min-height: 2.5rem;
+    max-height: 20rem;
+    resize: vertical;
+}
+
+/* Alternative: Using @layer utilities for better integration */
+@layer utilities {
+    .field-auto {
+        field-sizing: content;
+    }
+
+    .field-fixed {
+        field-sizing: fixed;
+    }
+}

@@ -1,0 +1,114 @@
+/* Advanced Interactive Effects - B10-B16 */
+
+@layer utilities {
+
+    /* B10: Stagger Animation */
+    .stagger-item {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: stagger-in 0.4s ease forwards;
+    }
+
+    .stagger-item:nth-child(1) {
+        animation-delay: 0.05s;
+    }
+
+    .stagger-item:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+
+    .stagger-item:nth-child(3) {
+        animation-delay: 0.15s;
+    }
+
+    .stagger-item:nth-child(4) {
+        animation-delay: 0.2s;
+    }
+
+    .stagger-item:nth-child(5) {
+        animation-delay: 0.25s;
+    }
+
+    .stagger-item:nth-child(6) {
+        animation-delay: 0.3s;
+    }
+
+    @keyframes stagger-in {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* B11: Blur-in Effect */
+    .blur-in {
+        animation: blur-in-fade 0.6s ease forwards;
+    }
+
+    @keyframes blur-in-fade {
+        from {
+            opacity: 0;
+            filter: blur(10px);
+        }
+
+        to {
+            opacity: 1;
+            filter: blur(0);
+        }
+    }
+
+    /* B14: Elastic Hover */
+    .btn-elastic {
+        transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .btn-elastic:hover {
+        transform: scale(1.05);
+    }
+
+    .btn-elastic:active {
+        transform: scale(0.95);
+    }
+
+    /* B15: Skeleton Loading */
+    .skeleton {
+        background: linear-gradient(90deg,
+                #e2e8f0 0%,
+                #f1f5f9 50%,
+                #e2e8f0 100%);
+        background-size: 200% 100%;
+        animation: skeleton-loading 1.5s ease-in-out infinite;
+    }
+
+    @keyframes skeleton-loading {
+        0% {
+            background-position: 200% 0;
+        }
+
+        100% {
+            background-position: -200% 0;
+        }
+    }
+
+    /* B16: Ripple Effect */
+    .ripple-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        transform: scale(0);
+        animation: ripple-animation 0.6s ease-out;
+        pointer-events: none;
+    }
+
+    @keyframes ripple-animation {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+}

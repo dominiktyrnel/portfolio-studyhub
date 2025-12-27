@@ -1,0 +1,292 @@
+/* Tailwind 4 Cascade Layers - Perfect CSS Isolation */
+/* Following AI_GUIDE.md Rule #3: Professional, long-term solution */
+
+@layer reset, base, components, utilities, cv, study, admin;
+
+@import "tailwindcss";
+@import "./tailwind-theme.css";
+@import "./design-tokens.css";
+@import "./textarea-utils.css";
+@import "./3d-effects.css";
+@import "./oklch-gradients.css";
+@import "./advanced-effects.css";
+
+/* Reset & Base */
+html,
+body {
+    height: 100%;
+    font-family: 'Noto Sans KR', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    background-color: var(--color-bg-base, #ffffff);
+    color: var(--color-text-primary, #000000);
+}
+
+/* CV Section Styles - Isolated Layer */
+@layer cv {
+    :root {
+        /* CV Color Palette - Korean/Professional Theme */
+        --kr-bg: #f8fafc;
+        --kr-surface: #ffffff;
+        --kr-wash: #f1f5f9;
+        --kr-border: #e2e8f0;
+        --kr-text-heading: #0f172a;
+        --kr-text-main: #334155;
+        --kr-text-sub: #64748b;
+        --kr-text-meta: #94a3b8;
+        --kr-primary: #3b82f6;
+        --kr-primary-hover: #2563eb;
+    }
+
+    /* CV-specific utility classes can go here */
+}
+
+:root {
+    /* ADMIN Theme - Light (Study Hub style) - "Warm Paper" */
+    /* Using same palette as Study Hub for consistency */
+    --admin-bg: #F9F7F2;
+    /* Warm Paper - same as study */
+    --admin-surface: #FFFFFF;
+    /* Clean Desk */
+    --admin-border: #E8E0D5;
+    /* Light Oak */
+    --admin-text: #3D3630;
+    /* Espresso */
+    --admin-text-sub: #787066;
+    /* Pencil Grey */
+    --admin-sidebar: #FFFFFF;
+    /* Clean sidebar */
+    --admin-sidebar-text: #3D3630;
+    /* Espresso text */
+    --admin-wash: #F9F7F2;
+    /* Warm wash - same as bg */
+    --admin-primary: #C59D5F;
+    /* Desk Wood - same as study accent */
+}
+
+[data-theme='dark'] {
+    /* ADMIN Theme - Dark (Study Hub style) - "Deep Room" */
+    /* Using same palette as Study Hub for consistency */
+    --admin-bg: #1A1816;
+    /* Deep Room - same as study */
+    --admin-surface: #262320;
+    /* Shadow Surface */
+    --admin-border: #3D3630;
+    /* Dark Wood */
+    --admin-text: #EBE5DA;
+    /* Book Page */
+    --admin-text-sub: #A69E94;
+    /* Dim Light */
+    --admin-sidebar: #1A1816;
+    /* Deep sidebar */
+    --admin-sidebar-text: #EBE5DA;
+    /* Book Page text */
+    --admin-wash: #262320;
+    /* Shadow wash */
+    --admin-primary: #FF9F43;
+    /* Fireplace Glow - same as study accent */
+}
+
+/* Study Hub Variables - Light Theme (Day) - "Ranní káva u stolu" */
+/* VISION.md lines 573-582 */
+/* NOTE: Must be outside @layer for Tailwind @theme to work properly */
+:root {
+    --study-bg: #F9F7F2;
+    /* Warm Paper */
+    --study-surface: #FFFFFF;
+    /* Clean Desk */
+    --study-border: #E8E0D5;
+    /* Light Oak */
+    --study-text: #3D3630;
+    /* Espresso */
+    --study-text-muted: #787066;
+    /* Pencil Grey */
+    --study-accent: #C59D5F;
+    /* Desk Wood */
+    --study-accent-sub: #E6B877;
+    /* Cozy Lamp (hover) */
+    --study-live: #FF4D4D;
+    /* Live badge red */
+    --study-focus: #C59D5F;
+    /* Same as accent */
+}
+
+/* STUDY SCOPE - Strict Isolation for Study Hub */
+/* These variables only exist inside .study-scope wrapper */
+.study-scope {
+    /* Apply these to the container locally */
+    background-color: var(--study-bg);
+    color: var(--study-text);
+    /* Prevent horizontal overflow on mobile */
+    overflow-x: hidden;
+}
+
+.study-scope[data-theme='dark'] {
+    /* Dark Theme (Night) - Deep Room - VISION.md spec */
+    --study-bg: #1A1816;
+    /* Deep Room */
+    --study-surface: #262320;
+    /* Shadow Surface */
+    --study-border: #3D3630;
+    /* Dark Wood */
+    --study-text: #EBE5DA;
+    /* Book Page */
+    --study-text-muted: #A69E94;
+    /* Dim Light */
+    --study-accent: #FF9F43;
+    /* Fireplace Glow */
+    --study-accent-sub: #D67D34;
+    /* Warm Ember */
+    --study-focus: #FF9F43;
+    --study-live: #FF4D4D;
+
+    background-color: var(--study-bg);
+    color: var(--study-text);
+}
+
+/* Tailwind v4 purge issue: md:flex utility not being generated */
+/* Direct CSS rule to ensure navigation is visible on desktop */
+@media (min-width: 768px) {
+    .study-scope nav[aria-label="Study navigation"] {
+        display: flex !important;
+    }
+}
+
+/* ==========================================
+   DARK MODE SUPPORT
+   Essential overrides for tailwind utility classes in dark mode
+   ========================================== */
+
+/* Background overrides */
+.study-scope[data-theme='dark'] .bg-study-bg,
+.study-scope[data-theme='dark'] .bg-\[var\(--study-bg\)\] {
+    background-color: #1A1816 !important;
+}
+
+.study-scope[data-theme='dark'] .bg-study-surface,
+.study-scope[data-theme='dark'] .bg-\[var\(--study-surface\)\] {
+    background-color: #262320 !important;
+}
+
+/* Text overrides */
+.study-scope[data-theme='dark'] .text-study-text,
+.study-scope[data-theme='dark'] .text-\[var\(--study-text\)\] {
+    color: #EBE5DA !important;
+}
+
+.study-scope[data-theme='dark'] .text-study-muted,
+.study-scope[data-theme='dark'] .text-\[var\(--study-text-muted\)\] {
+    color: #A69E94 !important;
+}
+
+/* Border overrides */
+.study-scope[data-theme='dark'] .border-study-border,
+.study-scope[data-theme='dark'] .border-\[var\(--study-border\)\] {
+    border-color: #3D3630 !important;
+}
+
+/* Accent overrides */
+.study-scope[data-theme='dark'] .bg-study-accent,
+.study-scope[data-theme='dark'] .bg-\[var\(--study-accent\)\] {
+    background-color: #FF9F43 !important;
+}
+
+/* Inverted border for profile photo: dark border in day, light in night */
+.study-scope .border-study-inverted {
+    border-color: #3D3630;
+}
+
+.study-scope[data-theme='dark'] .border-study-inverted {
+    border-color: #EBE5DA !important;
+}
+
+/* Header background fix for dark mode with opacity */
+.study-scope[data-theme='dark'] .bg-study-surface\/50 {
+    background-color: rgba(38, 35, 32, 0.5) !important;
+}
+
+.study-scope[data-theme='dark'] .bg-study-bg\/95 {
+    background-color: rgba(26, 24, 22, 0.95) !important;
+}
+
+
+body.modal-open {
+    overflow: hidden;
+    padding-right: 15px;
+    /* Prevent layout shift from scrollbar removal */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Print Styles */
+@media print {
+    @page {
+        margin: 1cm;
+        size: A4;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    aside,
+    nav,
+    button,
+    .no-print,
+    #lightbox {
+        display: none !important;
+    }
+
+    main {
+        padding: 0 !important;
+        width: 100% !important;
+        max-width: none !important;
+    }
+
+    /* Expand Layout from 2-col to 1-col for print */
+    .md\:grid {
+        display: block !important;
+    }
+
+    /* Sidebar Content (Profile) needs to be visible but restyled */
+    /* Actually, Sidebar component includes Nav which is hidden, but Profile info is in Sidebar */
+    /* We might need to adjust Sidebar visibility logic. */
+
+    /* Better Approach for this specific layout: 
+     The Sidebar has Profile info. We want Profile info + Main Content.
+  */
+    aside {
+        display: block !important;
+        position: static !important;
+        height: auto !important;
+        border: none !important;
+        padding: 0 !important;
+        margin-bottom: 2cm;
+    }
+
+    /* Hide specific elements inside Sidebar */
+    aside button,
+    aside nav,
+    aside .md\:hidden {
+        /* Mobile Header */
+        display: none !important;
+    }
+
+    /* Hide large Profile Photo placeholder to save ink? Option: Keep it. */
+}

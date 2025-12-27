@@ -1,0 +1,38 @@
+{
+    "nav": {
+        "summary": "Summary",
+        "preferences": "Preferences",
+        "skills": "Skills",
+        "experience": "Experience",
+        "cases": "Portfolio",
+        "credentials": "Credentials",
+        "motivation": "Motivation",
+        "study_bot": "Study Bot",
+        "study_plan": "Study Plan",
+        "inbox": "Inbox",
+        "work_style": "Work Style",
+        "trust": "References",
+        "contact": "Contact"
+    },
+    "ui": {
+        "switch_lang": "Switch to",
+        "open_kakao": "Open KakaoTalk",
+        "pdf_export": "PDF Export"
+    },
+    "labels": {
+        "photo": "PHOTO",
+        "contact": "Contact",
+        "interview_avail": "Available for interview.",
+        "view_cv": "This page is for CV viewing purposes."
+    },
+    "section_titles": {
+        "summary": "Summary",
+        "preferences": "Preferences",
+        "skills": "Skills",
+        "experience": "Experience",
+        "cases": "Portfolio",
+        "credentials": "Credentials & Safety",
+        "contact": "Contact",
+        "motivation": "Motivation"
+    }
+}

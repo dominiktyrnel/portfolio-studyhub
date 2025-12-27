@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+/* ==========================================
+   TAILWIND 4 CUSTOM VARIANTS
+   ========================================== */
+
+/* Dark variant for Study Hub - works with data-theme="dark" */
+@variant dark (&:where(.study-scope[data-theme='dark'], .study-scope[data-theme='dark'] *));
+
+/* Live variant for streaming state */
+@variant live (&:where([data-live='true'], [data-live='true'] *));
+
+/* Focus mode variant */
+@variant focus-mode (&:where([data-mode='focus'], [data-mode='focus'] *));
+
+/* ==========================================
+   SOURCE PATHS FOR CSS SCANNER
+   ========================================== */
+
+@source "../../src/**/*.tsx";
+@source "../../src/**/*.ts";
+@source "../../index.html";
+
+/* ==========================================
+   THEME CONFIGURATION
+   ========================================== */
+
+@theme {
+    /* ==========================================
+       COLOR ALIASES - Direct utility classes
+       Use: bg-surface, text-primary, border-border
+       ========================================== */
+    
+    /* Light mode colors (default) */
+    --color-surface: var(--study-surface, #FFFFFF);
+    --color-bg: var(--study-bg, #F9F7F2);
+    --color-primary: var(--study-text, #3D3630);
+    --color-muted: var(--study-text-muted, #787066);
+    --color-border: var(--study-border, #E8E0D5);
+    --color-accent: var(--study-accent, #C59D5F);
+    --color-accent-hover: var(--study-accent-sub, #E6B877);
+    
+    /* Dark mode colors - for dark: variant */
+    --color-dark-surface: #262320;
+    --color-dark-bg: #1A1816;
+    --color-dark-primary: #EBE5DA;
+    --color-dark-muted: #A69E94;
+    --color-dark-border: #3D3630;
+    --color-dark-accent: #FF9F43;
+    --color-dark-accent-hover: #D67D34;
+    
+    /* ==========================================
+       STUDY HUB SEMANTIC COLORS
+       ========================================== */
+    
+    --color-study-bg: var(--study-bg);
+    --color-study-surface: var(--study-surface);
+    --color-study-border: var(--study-border);
+    --color-study-text: var(--study-text);
+    --color-study-muted: var(--study-text-muted);
+    --color-study-accent: var(--study-accent);
+    --color-study-sub: var(--study-accent-sub);
+    --color-study-focus: var(--study-focus);
+    --color-study-live: var(--study-live);
+
+    /* ==========================================
+       ADMIN COLORS
+       ========================================== */
+    
+    --color-admin-bg: var(--admin-bg);
+    --color-admin-surface: var(--admin-surface);
+    --color-admin-border: var(--admin-border);
+    --color-admin-text: var(--admin-text);
+    --color-admin-sub: var(--admin-text-sub);
+    --color-admin-sidebar-bg: var(--admin-sidebar);
+    --color-admin-sidebar-text: var(--admin-sidebar-text);
+    --color-admin-wash: var(--admin-wash);
+    --color-admin-primary: var(--admin-primary);
+
+    /* ==========================================
+       KOREAN THEME COLORS
+       ========================================== */
+    
+    --color-kr-bg: #F0F0F0;
+    --color-kr-surface: #F8F8F8;
+    --color-kr-wash: #EFF5FF;
+    --color-kr-text-main: #2D2D2D;
+    --color-kr-text-heading: #1D1D1D;
+    --color-kr-text-sub: #717171;
+    --color-kr-text-meta: #8E8E8E;
+    --color-kr-primary: #2A5C96;
+    --color-kr-primary-hover: #003675;
+    --color-kr-primary-bg: #D3E1FB;
+    --color-kr-border: #E4E4E4;
+
+    /* ==========================================
+       NAVY SCALE
+       ========================================== */
+    
+    --color-navy-50: #f0f7ff;
+    --color-navy-100: #e0f2fe;
+    --color-navy-200: #bae6fd;
+    --color-navy-300: #7dd3fc;
+    --color-navy-400: #38bdf8;
+    --color-navy-500: #0ea5e9;
+    --color-navy-600: #0284c7;
+    --color-navy-700: #0369a1;
+    --color-navy-800: #075985;
+    --color-navy-900: #0c4a6e;
+    --color-navy-950: #082f49;
+
+    /* ==========================================
+       SLATE SCALE EXTRAS
+       ========================================== */
+    
+    --color-slate-850: #1e293b;
+    --color-slate-900: #0f172a;
+    --color-slate-950: #020617;
+
+    /* ==========================================
+       TYPOGRAPHY
+       ========================================== */
+    
+    --font-sans: "Noto Sans KR", sans-serif;
+    --font-heading: "Noto Sans KR", sans-serif;
+    
+    /* Fluid typography scale */
+    --font-size-fluid-xs: clamp(0.75rem, 1.5vw, 0.875rem);
+    --font-size-fluid-sm: clamp(0.875rem, 2vw, 1rem);
+    --font-size-fluid-base: clamp(1rem, 2.5vw, 1.125rem);
+    --font-size-fluid-lg: clamp(1.125rem, 3vw, 1.25rem);
+    --font-size-fluid-xl: clamp(1.25rem, 3.5vw, 1.5rem);
+    --font-size-fluid-2xl: clamp(1.5rem, 4vw, 2rem);
+    --font-size-fluid-3xl: clamp(1.875rem, 5vw, 2.5rem);
+    --font-size-fluid-4xl: clamp(2.25rem, 6vw, 3rem);
+
+    /* ==========================================
+       ANIMATIONS
+       ========================================== */
+    
+    --animate-fade-in: fade-in 0.3s ease-out;
+    --animate-slide-up: slide-up 0.4s ease-out;
+    --animate-pulse-slow: pulse-slow 2s ease-in-out infinite;
+    --animate-bounce-subtle: bounce-subtle 1s ease-in-out infinite;
+}
+
+/* ==========================================
+   KEYFRAME ANIMATIONS
+   ========================================== */
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slide-up {
+    from { 
+        opacity: 0; 
+        transform: translateY(10px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+@keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; }
+}
+
+@keyframes bounce-subtle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow,noarchive,nosnippet,noimageindex">
+  <title>이력서 & 스터디</title>
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="이력서 & 스터디 | Dominik Tyrnel" />
+  <meta property="og:description"
+    content="Stavební technik s 15 lety praxe v ČR a zahraničí. Specializace na řízení malých týmů, obklady a kompletní realizace." />
+  <meta property="og:image" content="https://dominik-tyrnel.web.app/img/profile/profile.webp" />
+  <meta property="og:url" content="https://dominik-tyrnel.web.app/" />
+  <meta property="og:locale" content="cs_CZ" />
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <meta name="theme-color" content="#8B6F47" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Study Hub" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Auto-version detection for cache busting -->
+  <meta name="app-version" content="__BUILD_TIMESTAMP__">
+  <script>
+    (function () {
+      try {
+        const currentVersion = document.querySelector('meta[name="app-version"]').content;
+        const storedVersion = localStorage.getItem('app-version');
+
+        if (storedVersion && storedVersion !== currentVersion && storedVersion !== '__BUILD_TIMESTAMP__') {
+          localStorage.setItem('app-version', currentVersion);
+          window.location.reload();
+        } else {
+          localStorage.setItem('app-version', currentVersion);
+        }
+      } catch (e) {
+        console.warn('Version check failed:', e);
+      }
+    })();
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
+</html>
