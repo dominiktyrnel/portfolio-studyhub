@@ -4,7 +4,7 @@
 
 **Purpose**: Authoritative schema definitions for all Firestore collections  
 **Status**: FROZEN - changes require user approval  
-**Last Updated**: December 27, 2024 (v3.0)
+**Last Updated**: December 27, 2024 (v3.1)
 
 ---
 
@@ -16,6 +16,7 @@
 | [`bot_status/heartbeat`](#bot_status_heartbeat)   | Bot health (admin only)     | Bot             | Admin       |
 | [`config/bot`](#config_bot)                       | Bot configuration           | Admin           | Bot         |
 | [`runtime/obsPomodoro`](#runtime_obspomodoro)     | OBS timer data (v2.9)       | OBS Script      | Public      |
+| [`runtime/timeline`](#runtime_timeline)           | Timeline events (v3.1)      | OBS Script      | Public      |
 | [`runtime/adminCommand`](#runtime_admincommand)   | Admin console commands      | Admin           | Bot         |
 | [`bot_commands`](#bot_commands)                   | Custom chat commands        | Admin           | Admin       |
 | [`stream_stats`](#stream_stats)                   | Live stream statistics      | Bot             | Public      |
@@ -177,6 +178,33 @@
 ```
 
 **Security Note**: `allow write: if true` - OBS script uses API key, not Firebase Auth.
+
+---
+
+<a name="runtime_timeline"></a>
+
+## `runtime/timeline`
+
+**Purpose**: Real-time timeline events from OBS Python script (separate from timer to avoid conflicts)  
+**Writer**: OBS Python script (via REST API)  
+**Reader**: Web app (public via onSnapshot)  
+**Added**: v3.1 (December 2024)
+
+```typescript
+{
+  items: Array<{
+    t: Timestamp,                // Event timestamp (UTC)
+    type: string,                // 'start', 'stop', 'focus', 'short_break', 'long_break', 'pause', 'resume', 'completed'
+    labelKR: string,             // Korean message (e.g., '시작 — 지금 시작했어요...')
+    labelEN: string,             // English message
+    by: 'obs' | 'admin' | 'user' // Event source
+  }>  // Max 30 items, FIFO
+}
+```
+
+**Why separate from `obsPomodoro`**: Timer sync writes every few seconds. If timeline was in same document, timer writes would overwrite timeline array. Separated for data integrity.
+
+**Web Integration**: `useStudyStatus` hook has dedicated `onSnapshot` listener for this document. Timeline displays in Korean timezone (Asia/Seoul).
 
 ---
 

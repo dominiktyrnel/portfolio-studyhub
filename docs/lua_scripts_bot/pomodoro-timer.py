@@ -19,11 +19,14 @@ import time
 import threading
 from datetime import datetime
 
+# Thread lock for serializing timeline writes
+timeline_lock = threading.Lock()
+
 # =============================================================================
 # FIREBASE CONFIG
 # =============================================================================
 FIREBASE_PROJECT_ID = "tyrnel-web-portfolio"
-FIREBASE_API_KEY = "AIzaSyB_ancmD64A1wFErEiGCfZxqlJ0vXNS3Es"
+FIREBASE_API_KEY = "YOUR_FIREBASE_API_KEY"  # Get from Firebase Console > Project Settings > Web API Key
 FIREBASE_URL = f"https://firestore.googleapis.com/v1/projects/{FIREBASE_PROJECT_ID}/databases/(default)/documents"
 
 # =============================================================================
@@ -143,6 +146,139 @@ def async_sync():
     thread.start()
 
 # =============================================================================
+# TIMELINE EVENT LABELS (KR/EN) - Full motivational messages (no emojis, web has icons)
+# =============================================================================
+TIMELINE_LABELS = {
+    "START": {
+        "kr": "시작 — 지금 시작했어요. 오늘의 흐름은 여기서 만들어져요.",
+        "en": "Start — You've started. Today's momentum begins right here."
+    },
+    "STOP": {
+        "kr": "종료 — 오늘은 여기까지. 충분히 잘했어요.",
+        "en": "End — That's enough for today. You did well."
+    },
+    "FOCUS": {
+        "kr": "집중 — 지금은 딱 한 가지에만. 조용히, 끝까지.",
+        "en": "Focus — One thing only. Quietly, all the way through."
+    },
+    "SHORT_BREAK": {
+        "kr": "휴식 — 물 한 모금, 어깨 풀고 다시 가요.",
+        "en": "Break — Take a sip of water, loosen your shoulders, and go again."
+    },
+    "LONG_BREAK": {
+        "kr": "긴 휴식 — 숨 고르고 리셋해요. 다음 라운드 준비.",
+        "en": "Long break — Breathe, reset, get ready for the next round."
+    },
+    "PAUSE": {
+        "kr": "일시정지 — 잠깐 멈춰도 괜찮아요. 다시 돌아오면 돼요.",
+        "en": "Pause — It's okay to pause. Just come back."
+    },
+    "RESUME": {
+        "kr": "재개 — 다시 시작. 흐름만 잡으면 돼요.",
+        "en": "Resume — Start again. Just catch the flow."
+    },
+    "NEW_SESSION": {
+        "kr": "새 세션 — 새로운 시작. 화이팅!",
+        "en": "New Session — Fresh start. Let's go!"
+    },
+    "COMPLETED": {
+        "kr": "완료! — 완료! 오늘의 승리는 '꾸준함'이에요.",
+        "en": "Done! — Done. Today's win is consistency."
+    },
+}
+
+def append_to_timeline(event_type):
+    """Append event to runtime/timeline.items for real-time web updates"""
+    # Use lock to prevent race conditions
+    with timeline_lock:
+        try:
+            labels = TIMELINE_LABELS.get(event_type, {"kr": event_type, "en": event_type})
+            
+            # Read from SEPARATE document to avoid conflicts with timer sync
+            read_url = f"{FIREBASE_URL}/runtime/timeline?key={FIREBASE_API_KEY}"
+            response = requests.get(read_url, timeout=5)
+            
+            timeline = []
+            if response.status_code == 200:
+                data = response.json()
+                fields = data.get("fields", {})
+                if "items" in fields and "arrayValue" in fields["items"]:
+                    timeline = fields["items"]["arrayValue"].get("values", [])
+                    print(f"[Pomodoro] DEBUG: Read {len(timeline)} existing items")
+                else:
+                    print(f"[Pomodoro] DEBUG: No items found, starting fresh")
+            elif response.status_code == 404:
+                print(f"[Pomodoro] DEBUG: Document doesn't exist, creating new")
+            else:
+                print(f"[Pomodoro] DEBUG: Read failed with status {response.status_code}")
+            
+            # Create new timeline item
+            now_iso = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S.000Z")
+            new_item = {
+                "mapValue": {
+                    "fields": {
+                        "t": {"timestampValue": now_iso},
+                        "type": {"stringValue": event_type.lower()},
+                        "labelKR": {"stringValue": labels["kr"]},
+                        "labelEN": {"stringValue": labels["en"]},
+                        "by": {"stringValue": "obs"}
+                    }
+                }
+            }
+            
+            # Deduplication: skip if last event has same type
+            if len(timeline) > 0:
+                last_item = timeline[-1]
+                if "mapValue" in last_item:
+                    last_fields = last_item["mapValue"].get("fields", {})
+                    last_type = last_fields.get("type", {}).get("stringValue", "")
+                    if last_type == event_type.lower():
+                        print(f"[Pomodoro] Skipping duplicate timeline event: {event_type}")
+                        return
+            
+            # Add new item
+            timeline.append(new_item)
+            
+            # Keep only last 30 items
+            if len(timeline) > 30:
+                timeline = timeline[-30:]
+            
+            # Write back to runtime/timeline (separate from timer sync)
+            doc = {
+                "fields": {
+                    "items": {
+                        "arrayValue": {
+                            "values": timeline
+                        }
+                    }
+                }
+            }
+            
+            # Use updateMask to only update items field
+            write_url = f"{FIREBASE_URL}/runtime/timeline?key={FIREBASE_API_KEY}&updateMask.fieldPaths=items"
+            headers = {"Content-Type": "application/json"}
+            
+            response = requests.patch(
+                write_url,
+                headers=headers,
+                data=json.dumps(doc),
+                timeout=5
+            )
+            
+            if response.status_code in [200, 201]:
+                print(f"[Pomodoro] Timeline updated: {event_type} (total: {len(timeline)} items)")
+            else:
+                print(f"[Pomodoro] Timeline write error: {response.status_code} - {response.text[:100]}")
+                
+        except Exception as e:
+            print(f"[Pomodoro] Timeline append failed: {e}")
+
+def async_timeline(event_type):
+    """Run timeline append in background thread"""
+    thread = threading.Thread(target=lambda: append_to_timeline(event_type), daemon=True)
+    thread.start()
+
+# =============================================================================
 # OBS TEXT SOURCE UPDATES
 # =============================================================================
 def update_displays():
@@ -244,13 +380,14 @@ def on_phase_complete():
             state.time_remaining = 0
             update_displays()
             async_sync()
+            async_timeline("COMPLETED")
         else:
             # Start next focus session
             state.current_session += 1
             start_phase("focus")
 
-def start_phase(phase_mode):
-    """Start a specific phase"""
+def start_phase(phase_mode, emit_timeline=True):
+    """Start a specific phase. emit_timeline=False to skip timeline event (e.g. when called from START)"""
     state.mode = phase_mode
     state.running = True
     state.paused = False
@@ -266,6 +403,15 @@ def start_phase(phase_mode):
     state.time_remaining = state.phase_duration
     update_displays()
     async_sync()
+    
+    # Timeline event (skip if called from START to avoid race condition)
+    if emit_timeline:
+        if phase_mode == "focus":
+            append_to_timeline("FOCUS")
+        elif phase_mode == "shortBreak":
+            append_to_timeline("SHORT_BREAK")
+        elif phase_mode == "longBreak":
+            append_to_timeline("LONG_BREAK")
 
 # =============================================================================
 # BUTTON CALLBACKS
@@ -274,8 +420,9 @@ def on_start_clicked(props, prop):
     """Start button clicked"""
     if state.mode == "ready" or state.mode == "completed":
         state.reset()
-        start_phase("focus")
-        print("[Pomodoro] ▶️ Started!")
+        append_to_timeline("START")  # Synchronous call with lock
+        start_phase("focus", emit_timeline=False)  # Skip FOCUS event, START is enough
+        print("[Pomodoro] Started!")
     return True
 
 def on_pause_clicked(props, prop):
@@ -288,13 +435,15 @@ def on_pause_clicked(props, prop):
         state.paused = False
         state.mode = state.paused_from
         state.phase_started_at = time.time() - (state.phase_duration - state.time_remaining)
-        print("[Pomodoro] ▶️ Resumed")
+        append_to_timeline("RESUME")  # Synchronous
+        print("[Pomodoro] Resumed")
     else:
         # Pause
         state.paused = True
         state.paused_from = state.mode
         state.mode = "paused"
-        print("[Pomodoro] ⏸️ Paused")
+        append_to_timeline("PAUSE")  # Synchronous
+        print("[Pomodoro] Paused")
     
     update_displays()
     async_sync()
@@ -306,7 +455,8 @@ def on_stop_clicked(props, prop):
     state.mode = "ready"
     update_displays()
     async_sync()
-    print("[Pomodoro] ⏹️ Stopped")
+    append_to_timeline("STOP")  # Synchronous
+    print("[Pomodoro] Stopped")
     return True
 
 def on_skip_clicked(props, prop):
