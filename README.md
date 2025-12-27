@@ -113,9 +113,18 @@ Dual language system - separate providers for Portfolio (KR/EN/CZ) and Study Hub
 
 ---
 
-## 📄 License
+## ⚠️ Usage / Permission (Important)
+
+This repository is **NOT open-source**.  
+It is published for **portfolio / reference viewing** only.
+
+- ✅ You may view the code to evaluate my work.
+- ❌ You may not copy, reuse, modify, redistribute, deploy, or use this code (fully or partially) without **explicit prior written permission**.
 
 This project is private. All rights reserved.
+
+📄 See [LICENSE](./LICENSE) for full terms.  
+📧 Permission requests: dominiktyrnel@gmail.com
 
 ---
 
