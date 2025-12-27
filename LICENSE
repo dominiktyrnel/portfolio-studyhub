@@ -1,12 +1,36 @@
 # LICENSE (PROPRIETARY)
 
-Copyright (c) 2025 Dominik Tyrnel
+Copyright © 2025 Dominik Tyrnel. All rights reserved.
 
-All rights reserved.
+## Terms
 
-This repository and its contents (including but not limited to source code, designs, text, documentation, configuration, and assets) are provided for viewing and evaluation purposes only.
+This repository and its contents — including but not limited to source code, designs, documentation, configuration files, and assets — are provided **exclusively for viewing and evaluation purposes**.
 
-No permission is granted to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software or any substantial portion of it, nor to use it in whole or in part in any product, service, website, or application, without explicit prior written permission from the copyright holder.
+## Restrictions
 
-If you would like to request permission, please contact:
-dominiktyrnel@gmail.com
+Without explicit prior written permission from the copyright holder, you may NOT:
+
+- Copy, reproduce, or clone this repository (except for personal viewing)
+- Modify, adapt, or create derivative works
+- Distribute, publish, or share the code
+- Use any part of this code in personal, commercial, or open-source projects
+- Deploy, host, or run this software
+- Sublicense or sell access to this code
+
+## Permitted Use
+
+- ✅ View the code for portfolio evaluation or reference
+- ✅ Link to this repository
+
+## Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. THE COPYRIGHT HOLDER SHALL NOT BE LIABLE FOR ANY CLAIMS OR DAMAGES ARISING FROM USE OF THIS SOFTWARE.
+
+## Contact
+
+For permission requests or inquiries:
+📧 dominiktyrnel@gmail.com
+
+---
+
+This license applies to all files in this repository unless explicitly stated otherwise.
