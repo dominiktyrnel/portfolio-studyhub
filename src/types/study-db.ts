@@ -197,19 +197,24 @@ export interface BotConfig {
     lastCommandAt?: Timestamp;
 }
 
-// --- CONTENT COLLECTIONS SCHEMA (FROZEN v1.0.0) ---
+// --- CONTENT COLLECTIONS SCHEMA ---
 
 export type StudyPlanStatus = 'planned' | 'in-progress' | 'completed';
 
 /**
  * Collection: `study_plan`
  * Document: `current` (Single Document)
- * Schema Version: 1
+ * Schema Version: 2 (upgraded from 1)
+ * 
+ * Contains both original month plan items AND complete Korean vocabulary data.
  */
 export interface StudyPlan {
-    schemaVersion: number;
+    schemaVersion: number;  // 2 for new structure
     updatedAt: Timestamp;
-    months: MonthPlan[];
+    months: MonthPlan[];    // Original structure (backward compatible)
+
+    // NEW: Complete Korean study plan data
+    koreanPlan?: KoreanStudyPlan;
 }
 
 export interface MonthPlan {
@@ -228,6 +233,148 @@ export interface PlanItem {
     status: StudyPlanStatus;
     order: number;
 }
+
+// --- NEW: Korean Study Plan Complete Types ---
+
+/**
+ * Complete Korean study plan with ALL content from markdown files
+ */
+export interface KoreanStudyPlan {
+    titleKR: string;
+    titleCZ: string;
+    startDate: string;
+    endDate: string;
+    milestones: StudyMilestone[];
+    monthsData: KoreanMonthData[];
+    overview?: StudyPlanOverview;
+}
+
+export interface StudyPlanOverview {
+    profile?: Record<string, string>;
+    schedule?: { day: string; time: string; activity: string }[];
+    tools?: { name: string; usage: string }[];
+    rules?: { do: string[]; dont: string[] };
+    motivation?: string;
+    totalHoursPerWeek?: string;
+}
+
+export interface StudyMilestone {
+    month: number;
+    level: string;      // A1, A1+, A2, B1, B2-
+    words: number;      // Cumulative word count
+    isCheckpoint: boolean;
+}
+
+export interface KoreanMonthData {
+    month: number;
+    nameKR: string;
+    nameCZ: string;
+    targetLevel: string;
+    targetWords: number;
+    totalWords: number;
+
+    // Month goals
+    goals: string[];
+
+    // Grammar overview for the month (with Czech descriptions)
+    grammarOverview: GrammarListItem[];
+
+    // Weeks structure
+    weeks: WeekData[];
+
+    // Days (for backwards compatibility)
+    days: KoreanDayData[];
+}
+
+export interface GrammarListItem {
+    kr: string;         // Korean structure
+    cz: string;         // Czech description
+}
+
+export interface WeekData {
+    weekNumber: number;
+    dateRange: string;  // "1.-5. LEDNA"
+    theme: string;      // "Čísla, pozdravy, 이다"
+    days: number[];     // Day numbers in this week
+}
+
+export interface KoreanDayData {
+    day: number;
+    date?: string;      // "ST 1.1.2026"
+    title?: string;     // "🎉 START!" or "⭐ VÍKEND"
+
+    // Vocabulary
+    vocab: VocabItem[];
+
+    // Grammar section (detailed)
+    grammar?: DayGrammar;
+
+    // Tasks/Exercises
+    tasks?: string[];
+    exercises?: string[];
+    notes?: string[];
+    focus?: string[];  // For review/practice days
+
+    // Sentence examples (from vocab tables with sentences)
+    sentences?: SentenceExample[];
+
+    isWeekend: boolean;
+    isTest: boolean;
+}
+
+export interface VocabItem {
+    kr: string;     // Korean word
+    cz: string;     // Czech meaning
+    en?: string;    // English meaning (optional, legacy)
+}
+
+// --- STUDY PROGRESS TRACKING (Firestore) ---
+
+/**
+ * Collection: `study_progress`
+ * Document: `current`
+ * 
+ * Admin-managed progress tracking for the Korean study plan.
+ * This is READ from the public page, WRITTEN from admin.
+ */
+export interface StudyProgress {
+    schemaVersion: number;
+    
+    // Current state
+    currentDay: number;              // Current day in plan (1-302)
+    currentMonth: number;            // Current month (1-10)
+    
+    // Completed days (array of day numbers)
+    completedDays: number[];
+    
+    // Stats
+    totalVocabLearned: number;       // Calculated from completed days
+    totalGrammarLearned: number;     // Calculated from completed days
+    streak: number;                  // Days in a row
+    
+    // Dates
+    startDate: string;               // When plan started (ISO date)
+    lastStudyDate?: string;          // Last completed day (ISO date)
+    
+    // Notes per day (optional admin notes)
+    dayNotes: Record<number, string>;
+    
+    // Timestamps
+    updatedAt: Timestamp;
+}
+
+export interface DayGrammar {
+    title: string;          // "이다 (být)"
+    explanation?: string;   // "Po samohlásce: -예요\nPo souhlásce: -이에요"
+    examples: SentenceExample[];
+}
+
+export interface SentenceExample {
+    kr: string;
+    cz: string;
+}
+
+
 
 /**
  * Collection: `room_settings`

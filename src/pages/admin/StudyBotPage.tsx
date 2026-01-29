@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { doc, onSnapshot, setDoc, updateDoc, deleteDoc, collection, Timestamp, query } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
-import { RefreshCcw, Square, Play, Plus, Edit, Trash, X, Save, AlertCircle, Terminal, Bot, Send, CheckCircle } from 'lucide-react';
+import { RefreshCcw, Square, Play, Plus, Edit, Trash, X, Save, AlertCircle, Terminal, Bot, Send, CheckCircle, Download, ExternalLink, Info, Settings2, Code } from 'lucide-react';
 import { AdminLayout } from '../../layouts/AdminLayout';
 import { logger } from '../../utils/logger';
 import type { BotCommand } from '../../types/bot';
@@ -391,6 +391,175 @@ export function StudyBotPage() {
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            {/* OBS Setup Guide */}
+            <div className="bg-admin-card rounded-xl border border-admin-border shadow-xs overflow-hidden mt-8">
+                <div className="border-b border-admin-border p-4 bg-gradient-to-r from-violet-500/10 to-blue-500/10 flex items-center gap-3">
+                    <Info size={20} className="text-violet-400" />
+                    <h2 className="font-bold text-admin-text">Nastavení OBS Studio</h2>
+                    <span className="text-xs bg-violet-500/20 text-violet-400 px-2 py-0.5 rounded-full font-medium">dokumentace</span>
+                </div>
+
+                <div className="p-6 space-y-6">
+                    {/* Downloads */}
+                    <div>
+                        <h3 className="text-sm font-bold text-admin-text mb-3 flex items-center gap-2">
+                            <Download size={16} className="text-blue-400" />
+                            Soubory ke stažení
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <a
+                                href="/docs/lua_scripts_bot/pomodoro-timer.py"
+                                download="pomodoro-timer.py"
+                                className="flex items-center gap-3 p-3 bg-admin-wash rounded-lg border border-admin-border hover:border-blue-500/50 hover:bg-blue-500/5 transition-all group"
+                            >
+                                <Code size={24} className="text-blue-400" />
+                                <div>
+                                    <div className="font-medium text-admin-text group-hover:text-blue-400">pomodoro-timer.py</div>
+                                    <div className="text-xs text-admin-sub">Hlavní Python skript</div>
+                                </div>
+                            </a>
+                            <a
+                                href="/docs/lua_scripts_bot/url-text.py"
+                                download="url-text.py"
+                                className="flex items-center gap-3 p-3 bg-admin-wash rounded-lg border border-admin-border hover:border-green-500/50 hover:bg-green-500/5 transition-all group"
+                            >
+                                <Code size={24} className="text-green-400" />
+                                <div>
+                                    <div className="font-medium text-admin-text group-hover:text-green-400">url-text.py</div>
+                                    <div className="text-xs text-admin-sub">URL text overlay</div>
+                                </div>
+                            </a>
+                            <a
+                                href="/docs/lua_scripts_bot/clear-timeline.py"
+                                download="clear-timeline.py"
+                                className="flex items-center gap-3 p-3 bg-admin-wash rounded-lg border border-admin-border hover:border-yellow-500/50 hover:bg-yellow-500/5 transition-all group"
+                            >
+                                <Code size={24} className="text-yellow-400" />
+                                <div>
+                                    <div className="font-medium text-admin-text group-hover:text-yellow-400">clear-timeline.py</div>
+                                    <div className="text-xs text-admin-sub">Vymazání timeline</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Setup Steps */}
+                    <div>
+                        <h3 className="text-sm font-bold text-admin-text mb-3 flex items-center gap-2">
+                            <Settings2 size={16} className="text-emerald-400" />
+                            Instalace do OBS Studio
+                        </h3>
+                        <div className="space-y-3">
+                            <div className="flex gap-3 p-3 bg-admin-wash rounded-lg border border-admin-border">
+                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500 text-white text-sm font-bold flex items-center justify-center">1</div>
+                                <div>
+                                    <div className="font-medium text-admin-text">Nainstaluj Python 3.12+</div>
+                                    <div className="text-sm text-admin-sub mt-1">
+                                        Stáhni z <a href="https://www.python.org/downloads/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline inline-flex items-center gap-1">python.org <ExternalLink size={12} /></a>. 
+                                        Při instalaci zaškrtni <code className="bg-admin-border px-1 rounded text-xs">"Add to PATH"</code>.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3 p-3 bg-admin-wash rounded-lg border border-admin-border">
+                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500 text-white text-sm font-bold flex items-center justify-center">2</div>
+                                <div>
+                                    <div className="font-medium text-admin-text">Nastav Python v OBS</div>
+                                    <div className="text-sm text-admin-sub mt-1">
+                                        <code className="bg-admin-border px-1 rounded text-xs">Tools → Scripts → Python Settings</code> → 
+                                        Nastav cestu k Python instalaci (např. <code className="bg-admin-border px-1 rounded text-xs">C:\Users\...\AppData\Local\Programs\Python\Python312</code>)
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3 p-3 bg-admin-wash rounded-lg border border-admin-border">
+                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500 text-white text-sm font-bold flex items-center justify-center">3</div>
+                                <div>
+                                    <div className="font-medium text-admin-text">Přidej skript</div>
+                                    <div className="text-sm text-admin-sub mt-1">
+                                        <code className="bg-admin-border px-1 rounded text-xs">Tools → Scripts → + (Add)</code> → 
+                                        Vyber stažený soubor <code className="bg-admin-border px-1 rounded text-xs">pomodoro-timer.py</code>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3 p-3 bg-admin-wash rounded-lg border border-admin-border">
+                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500 text-white text-sm font-bold flex items-center justify-center">4</div>
+                                <div>
+                                    <div className="font-medium text-admin-text">Vytvoř textové zdroje</div>
+                                    <div className="text-sm text-admin-sub mt-1">
+                                        V OBS vytvoř 3 <code className="bg-admin-border px-1 rounded text-xs">Text (GDI+)</code> zdroje s názvy:
+                                        <div className="flex gap-2 mt-2 flex-wrap">
+                                            <code className="bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded text-xs">pomodoro_mode</code>
+                                            <code className="bg-green-500/20 text-green-400 px-2 py-0.5 rounded text-xs">pomodoro_timer</code>
+                                            <code className="bg-yellow-500/20 text-yellow-400 px-2 py-0.5 rounded text-xs">pomodoro_session</code>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3 p-3 bg-admin-wash rounded-lg border border-admin-border">
+                                <div className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-500 text-white text-sm font-bold flex items-center justify-center">5</div>
+                                <div>
+                                    <div className="font-medium text-admin-text">Konfiguruj skript</div>
+                                    <div className="text-sm text-admin-sub mt-1">
+                                        Ve Script panelu nastav:
+                                        <ul className="mt-1 ml-4 list-disc text-admin-sub">
+                                            <li>Focus, Break, Long Break délky</li>
+                                            <li>Počet sessions</li>
+                                            <li>Zvukový soubor (volitelné)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Usage */}
+                    <div>
+                        <h3 className="text-sm font-bold text-admin-text mb-3 flex items-center gap-2">
+                            <Play size={16} className="text-blue-400" />
+                            Ovládání
+                        </h3>
+                        <div className="bg-admin-wash rounded-lg border border-admin-border p-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div>
+                                    <div className="font-medium text-admin-text mb-2">Ve Script panelu:</div>
+                                    <ul className="space-y-1 text-admin-sub">
+                                        <li>• <span className="text-green-400 font-mono">▶ Start</span> - Spustí timer</li>
+                                        <li>• <span className="text-yellow-400 font-mono">⏸ Pause</span> - Pozastaví</li>
+                                        <li>• <span className="text-red-400 font-mono">⏹ Stop</span> - Zastaví a resetuje</li>
+                                        <li>• <span className="text-blue-400 font-mono">⏭ Skip</span> - Přeskočí fázi</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <div className="font-medium text-admin-text mb-2">Hotkeys (volitelné):</div>
+                                    <ul className="space-y-1 text-admin-sub">
+                                        <li>• <code className="bg-admin-border px-1 rounded text-xs">Settings → Hotkeys</code></li>
+                                        <li>• Hledej "Pomodoro"</li>
+                                        <li>• Přiřaď klávesy pro Start/Pause/Stop</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Firebase Info */}
+                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
+                        <div className="flex items-start gap-3">
+                            <Info size={20} className="text-blue-400 flex-shrink-0 mt-0.5" />
+                            <div className="text-sm">
+                                <div className="font-medium text-blue-400 mb-1">Automatická synchronizace</div>
+                                <div className="text-admin-sub">
+                                    Skript automaticky zapisuje stav do Firebase (<code className="bg-admin-border px-1 rounded text-xs">runtime/obsPomodoro</code>). 
+                                    Webová stránka se aktualizuje v reálném čase. API klíč je již v skriptu nastaven.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {/* Edit/Create Modal */}

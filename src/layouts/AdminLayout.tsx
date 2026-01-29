@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Globe, Home, User, LogOut, Briefcase, FileText, Database, Terminal, BookOpen, Inbox, MessageSquare, Settings, DownloadCloud, Calendar, FileUser } from "lucide-react";
+import { LayoutDashboard, Globe, Home, User, LogOut, Briefcase, FileText, Database, Terminal, BookOpen, Inbox, MessageSquare, Settings, DownloadCloud, Calendar, FileUser, Target } from "lucide-react";
 import { useAuth } from "../lib/auth";
 import { Toaster } from 'react-hot-toast';
 
@@ -55,6 +55,7 @@ export function AdminLayout({ children, title, actions, maxWidth }: AdminLayoutP
                 { path: "/admin/study-global-settings", icon: <Globe size={18} />, label: "Globální nastavení" },
                 { path: "/admin/study-schedule", icon: <Calendar size={18} />, label: "Rozvrh" },
                 { path: "/admin/study-plan", icon: <BookOpen size={18} />, label: "Studijní plán" },
+                { path: "/admin/study-progress", icon: <Target size={18} />, label: "Progress" },
                 { path: "/admin/faq-editor", icon: <MessageSquare size={18} />, label: "FAQ" },
                 { path: "/admin/inbox", icon: <Inbox size={18} />, label: "Schránka" },
                 { path: "/admin/introduction-editor", icon: <FileUser size={18} />, label: "Intro" },

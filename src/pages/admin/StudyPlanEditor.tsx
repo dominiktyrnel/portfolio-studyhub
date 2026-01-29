@@ -3,7 +3,7 @@ import { doc, getDoc, setDoc, Timestamp } from 'firebase/firestore';
 import { db } from '../../lib/firebase';
 import { Plus, Edit, Trash, Save, X, ChevronDown, ChevronRight, GripVertical, Copy, Download, Upload } from 'lucide-react';
 import { AdminLayout } from '../../layouts/AdminLayout';
-import type { StudyPlan, MonthPlan, PlanItem, StudyPlanStatus } from '../../types/study-db';
+import type { StudyPlan, MonthPlan, PlanItem, StudyPlanStatus, KoreanStudyPlan } from '../../types/study-db';
 import toast from 'react-hot-toast';
 import { duplicateMonth, exportPlan, importPlan } from '../../utils/planTemplates';
 import { logger } from '../../utils/logger';
@@ -104,6 +104,49 @@ export function StudyPlanEditor() {
         importPlan(file, (importedPlan) => {
             savePlan(importedPlan);
         });
+    };
+
+    // Import Korean Plan with vocabulary data
+    const handleImportKoreanPlan = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file || !plan) return;
+
+        setSaving(true);
+        try {
+            const text = await file.text();
+            const data = JSON.parse(text);
+
+            // Check if it's the koreanPlan format
+            let koreanPlan: KoreanStudyPlan;
+            if (data.koreanPlan) {
+                koreanPlan = data.koreanPlan;
+            } else if (data.titleKR && data.monthsData) {
+                koreanPlan = data;
+            } else {
+                throw new Error('Neplatný formát Korean Plan');
+            }
+
+            const updatedPlan: StudyPlan = {
+                ...plan,
+                schemaVersion: 2,
+                koreanPlan: koreanPlan,
+                updatedAt: Timestamp.now()
+            };
+
+            await savePlan(updatedPlan);
+
+            const totalVocab = koreanPlan.monthsData.reduce((sum, m) =>
+                sum + m.days.reduce((dsum, d) => dsum + d.vocab.length, 0), 0);
+
+            toast.success(`Korean Plan importován! ${koreanPlan.monthsData.length} měsíců, ${totalVocab} slovíček ✅`);
+        } catch (error) {
+            logger.error(error instanceof Error ? error : new Error('Error importing Korean Plan'));
+            toast.error('Import Korean Plan selhal');
+        } finally {
+            setSaving(false);
+            // Reset file input
+            event.target.value = '';
+        }
     };
 
     // Month CRUD operations
@@ -250,29 +293,39 @@ export function StudyPlanEditor() {
     }
 
     return (
-        <AdminLayout title="Study Plan Editor">
+        <AdminLayout title="Editor plánu">
             <div className="max-w-5xl mx-auto p-6">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <div>
-                        <h1 className="text-3xl font-bold text-admin-text">Study Plan Editor</h1>
-                        <p className="text-admin-sub mt-1">Manage months and learning goals</p>
+                        <h1 className="text-3xl font-bold text-admin-text">Editor plánu studia</h1>
+                        <p className="text-admin-sub mt-1">Správa měsíců a cílů učení</p>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 flex-wrap justify-end">
                         <button
                             onClick={handleExportPlan}
                             className="flex items-center gap-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm transition-colors"
                         >
                             <Download size={16} />
-                            Export JSON
+                            Export
                         </button>
                         <label className="flex items-center gap-2 px-3 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm cursor-pointer transition-colors">
                             <Upload size={16} />
-                            Import JSON
+                            Import
                             <input
                                 type="file"
                                 accept=".json"
                                 onChange={handleImportPlan}
+                                className="hidden"
+                            />
+                        </label>
+                        <label className="flex items-center gap-2 px-3 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 text-sm cursor-pointer transition-colors">
+                            <Upload size={16} />
+                            🇰🇷 Korean Plan
+                            <input
+                                type="file"
+                                accept=".json"
+                                onChange={handleImportKoreanPlan}
                                 className="hidden"
                             />
                         </label>
@@ -281,10 +334,31 @@ export function StudyPlanEditor() {
                             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                         >
                             <Plus size={20} />
-                            New Month
+                            Nový měsíc
                         </button>
                     </div>
                 </div>
+
+                {/* Korean Plan Status */}
+                {plan?.koreanPlan && (
+                    <div className="mb-6 p-4 bg-gradient-to-r from-blue-900/30 to-purple-900/30 rounded-xl border border-blue-700/30">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <h3 className="font-bold text-admin-text flex items-center gap-2">
+                                    🇰🇷 {plan.koreanPlan.titleKR}
+                                </h3>
+                                <p className="text-sm text-admin-sub mt-1">
+                                    {plan.koreanPlan.monthsData.length} měsíců • {' '}
+                                    {plan.koreanPlan.monthsData.reduce((sum, m) =>
+                                        sum + m.days.reduce((dsum, d) => dsum + d.vocab.length, 0), 0)} slovíček
+                                </p>
+                            </div>
+                            <span className="text-xs bg-green-600/20 text-green-400 px-2 py-1 rounded">
+                                Nahráno ✓
+                            </span>
+                        </div>
+                    </div>
+                )}
 
                 {/* Months List */}
                 {plan && plan.months.length === 0 && (
