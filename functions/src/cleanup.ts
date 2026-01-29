@@ -14,8 +14,8 @@ admin.initializeApp();
 
 // ✅ SECURITY: CORS configuration
 const ALLOWED_ORIGINS = [
-    'https://tyrnelsite.web.app',
-    'https://tyrnelsite.firebaseapp.com',
+    'https://your-project.web.app',
+    'https://your-project.firebaseapp.com',
     'http://localhost:5173', // Dev only
     'http://localhost:4173'  // Preview only
 ];

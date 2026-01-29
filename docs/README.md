@@ -73,9 +73,9 @@ A **dual-purpose web application**:
 
 ### Live URLs
 
-- **Production**: https://dominik-tyrnel.web.app
-- **Bot Health**: https://study-bot-940573639306.europe-west1.run.app/health
-- **Firebase Console**: https://console.firebase.google.com/project/tyrnel-web-portfolio
+- **Production**: https://your-domain.web.app
+- **Bot Health**: https://your-bot-service.run.app/health
+- **Firebase Console**: https://console.firebase.google.com/project/your-project-id
 
 ---
 

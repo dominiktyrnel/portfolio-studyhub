@@ -25,7 +25,7 @@ timeline_lock = threading.Lock()
 # =============================================================================
 # FIREBASE CONFIG
 # =============================================================================
-FIREBASE_PROJECT_ID = "tyrnel-web-portfolio"
+FIREBASE_PROJECT_ID = "YOUR_PROJECT_ID"  # Get from Firebase Console > Project Settings
 FIREBASE_API_KEY = "YOUR_FIREBASE_API_KEY"  # Get from Firebase Console > Project Settings > Web API Key
 FIREBASE_URL = f"https://firestore.googleapis.com/v1/projects/{FIREBASE_PROJECT_ID}/databases/(default)/documents"
 

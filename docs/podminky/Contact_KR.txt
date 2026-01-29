@@ -18,4 +18,4 @@ KOREAN (한국어)
 - 카카오톡 링크를 클릭하면 웹사이트 밖의 카카오 서비스로 이동하며, 카카오의 정책이 적용됩니다.
 
 이메일(중요한 문의만)
-dominiktyrnel@gmail.com
+your-email@example.com

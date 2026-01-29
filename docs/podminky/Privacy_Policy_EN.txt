@@ -9,7 +9,7 @@ ENGLISH
 This Privacy Policy applies to dominik.tyrnel.com and its related services (the “Service”), including: Study dashboard (/study), Study Room access, user accounts, FAQ/contact form, and future notifications.
 Controller: Dominik Tyrnel (individual)
 Country: Czech Republic (EU)
-Contact email: dominiktyrnel@gmail.com
+Contact email: your-email@example.com
 
 2) What personal data we collect
 2.1 Data you provide
@@ -56,17 +56,17 @@ Security logs: stored for a limited period necessary to prevent abuse and secure
 
 9) Your rights
 9.1 EEA/EU (GDPR)
-You can request access, correction, deletion, restriction, portability, object to processing, and withdraw consent (for notifications and any consent-based processing). Contact: dominiktyrnel@gmail.com
+You can request access, correction, deletion, restriction, portability, object to processing, and withdraw consent (for notifications and any consent-based processing). Contact: your-email@example.com
 You may lodge a complaint with the Czech supervisory authority: Office for Personal Data Protection (ÚOOÚ), Pplk. Sochora 27, 170 00 Praha 7, Czech Republic, email: posta@uoou.cz
 
 9.2 South Korea (PIPA)
-If you are in South Korea, you may have rights to request access, correction, deletion, and suspension of processing under PIPA. Contact: dominiktyrnel@gmail.com
+If you are in South Korea, you may have rights to request access, correction, deletion, and suspension of processing under PIPA. Contact: your-email@example.com
 
 9.3 California (CCPA/CPRA) – only if applicable
 If you are a California resident and the law applies to the Service, you may have rights to know, delete, correct, and opt out of “sale”/“sharing”. We do not sell your personal information, and we do not share it for cross-context behavioral advertising.
 
 10) Children
-The Service is not intended for children under 16. If you believe a child has provided personal data, contact us at dominiktyrnel@gmail.com and we will remove it.
+The Service is not intended for children under 16. If you believe a child has provided personal data, contact us at your-email@example.com and we will remove it.
 
 11) Changes to this Policy
 We may update this Privacy Policy. We will update the “Last updated” date and, if changes are significant, we may post a notice on the Site.

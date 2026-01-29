@@ -394,10 +394,10 @@ export const content = {
             "비자/거주 절차: 회사와 협의"
         ],
         cta: "카카오톡으로 연락하기",
-        email: "dominiktyrnel@gmail.com",
+        email: "your-email@example.com",
         kakaoId: "dominikt",
         kakaoLink: "https://open.kakao.com/o/sX8hY7bg",
-        phone: "+420 734 857 103",
+        phone: "+420 XXX XXX XXX",
         phoneKr: KR_COMMON.CONTACT_KR_PHONE,
         note: "연락: 이메일 / 카카오톡 (체코 거주 · 한국 번호 없음)"
     },
@@ -575,10 +575,10 @@ export const content = {
             },
             contact: {
                 title: KR_COMMON.SECTION.CONTACT,
-                email: "dominiktyrnel@gmail.com",
+                email: "your-email@example.com",
                 kakaoId: "dominikt",
                 kakaoLink: "https://open.kakao.com/o/sX8hY7bg",
-                phoneCz: "+420 734 857 103",
+                phoneCz: "+420 XXX XXX XXX",
                 phoneKr: KR_COMMON.CONTACT_KR_PHONE,
                 note: "이메일이나 카카오톡으로 연락 주시면 빠르게 확인하겠습니다."
             }

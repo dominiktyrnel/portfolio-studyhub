@@ -74,7 +74,7 @@ export const termsOfService = {
             },
             {
                 title: '14) 문의',
-                content: `약관 관련 문의: dominiktyrnel@gmail.com`
+                content: `약관 관련 문의: your-email@example.com`
             }
         ]
     },
@@ -144,7 +144,7 @@ Focus culture: during focus sessions, keep chat minimal and respect the quiet st
             },
             {
                 title: '14) Contact',
-                content: `Questions about these Terms: dominiktyrnel@gmail.com`
+                content: `Questions about these Terms: your-email@example.com`
             }
         ]
     }

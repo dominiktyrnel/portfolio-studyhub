@@ -1,15 +1,15 @@
 {
   "projects": {
-    "default": "tyrnel-web-portfolio"
+    "default": "your-project-id"
   },
   "targets": {
-    "tyrnel-web-portfolio": {
+    "your-project-id": {
       "hosting": {
         "main": [
-          "tyrnel-web-portfolio"
+          "your-project-id"
         ],
-        "dominik": [
-          "dominik-tyrnel"
+        "custom": [
+          "your-custom-domain"
         ]
       }
     }

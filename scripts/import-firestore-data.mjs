@@ -68,7 +68,7 @@ async function main() {
         await importCollection('study_plan', 'firestore-import/study_plan/all_namespaces_all_kinds.export_metadata');
 
         console.log('\n🎉 All data imported successfully!');
-        console.log('\nVerify at: https://dominik-tyrnel.web.app/study/faq');
+        console.log('\nVerify at: https://your-domain.web.app/study/faq');
         process.exit(0);
     } catch (error) {
         console.error('\n❌ Import failed:', error.message);

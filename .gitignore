@@ -21,6 +21,10 @@ dist-ssr
 .env.*
 !.env.example
 
+# Firebase Service Account (CRITICAL - Never commit!)
+service-account.json
+**/service-account.json
+
 # Editor directories and files
 .vscode/
 !.vscode/extensions.json

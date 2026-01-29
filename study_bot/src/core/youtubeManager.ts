@@ -546,7 +546,7 @@ export class YoutubeManager {
     private async handleMyStats(authorId: string, authorName: string) {
         // !mystats = link to user's web profile (no DB read needed)
         await this.sendMessage(
-            `${authorName} 내 공부 통계 보기: https://dominik-tyrnel.web.app/study 📊`
+            `${authorName} 내 공부 통계 보기: https://your-domain.web.app/study 📊`
         );
     }
 

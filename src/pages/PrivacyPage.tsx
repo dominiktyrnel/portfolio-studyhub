@@ -254,7 +254,7 @@ export function PrivacyPage() {
                                 Pro uplatnění vašich práv nebo dotazy ohledně zpracování osobních údajů nás kontaktujte:
                             </p>
                             <div className="space-y-2 text-slate-700">
-                                <p><strong>Email:</strong> <a href="mailto:dominiktyrnel@gmail.com" className="text-blue-600 hover:underline">dominiktyrnel@gmail.com</a></p>
+                                <p><strong>Email:</strong> <a href="mailto:your-email@example.com" className="text-blue-600 hover:underline">your-email@example.com</a></p>
                                 <p><strong>Provozovatel:</strong> Dominik Tyrnel</p>
                                 <p><strong>Web:</strong> <a href="https://dominik.tyrnel.com" className="text-blue-600 hover:underline">dominik.tyrnel.com</a></p>
                             </div>
