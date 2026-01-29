@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { doc, setDoc, increment, serverTimestamp } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import { logger } from '../utils/logger';
+import { getKoreanDateString } from '../utils/koreanTime';
 
 const SESSION_KEY = 'tyrnel_visit_session';
 const UNIQUE_KEY = 'tyrnel_visitor_unique';
@@ -19,7 +20,7 @@ export function useMetrics() {
         const trackVisit = async () => {
             try {
                 const now = Date.now();
-                const todayStr = new Date().toISOString().split('T')[0];
+                const todayStr = getKoreanDateString();
                 const dailyRef = doc(db!, 'metrics', `daily_${todayStr}`);
                 const totalRef = doc(db!, 'metrics', 'total');
 

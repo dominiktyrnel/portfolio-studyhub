@@ -1,5 +1,6 @@
-import { Heart, Coffee, Shield, Zap, BookOpen, ArrowRight, type LucideIcon } from 'lucide-react';
+import { Heart, Coffee, Shield, Zap, BookOpen, ArrowRight, Github, type LucideIcon } from 'lucide-react';
 import { useStudyTranslations } from '../../study/i18n/useStudyTranslations';
+import { useStudyLanguage } from '../../study/i18n/useStudyLanguage';
 import { Link } from 'react-router-dom';
 
 interface ValueCardProps {
@@ -10,6 +11,20 @@ interface ValueCardProps {
 
 export function StudyAboutPage() {
     const t = useStudyTranslations();
+    const { studyLang } = useStudyLanguage();
+
+    const openSourceText = studyLang === 'kr' ? {
+        title: '기술 · 오픈소스',
+        desc: '이 스터디 허브는 커뮤니티를 위해 만든 작은 웹 공간입니다.\n라이브 상태/집중 모드/기록만 \'조용히\' 보여주고,\n영상·채팅은 외부 서비스로 진행합니다.\n\n개발 구조가 궁금한 분들을 위해 소스코드를 공개해두었습니다.\n(개인정보나 비밀키는 포함되지 않습니다.)',
+        button: '소스코드 보기',
+        subtext: 'GitHub에서 열기'
+    } : {
+        title: 'Tech · Open Source',
+        desc: 'This Study Hub is a small, quiet web space for the community.\nIt shows only live status / focus mode / records.\nVideo and chat are handled via external services.\n\nFor those curious about how it\'s built, the source code is available.\n(No personal data or secret keys are included.)',
+        button: 'View Source Code',
+        subtext: 'Open on GitHub'
+    };
+
     return (
         <div className="@starting-style:opacity-0 opacity-100 transition-opacity duration-500">
             <div className="min-h-screen bg-[var(--study-bg)] pt-24 pb-20 px-4 md:px-8 max-w-4xl mx-auto">
@@ -81,7 +96,7 @@ export function StudyAboutPage() {
                 </div>
 
                 {/* FAQ / Rules */}
-                <div className="bg-[var(--study-bg)] rounded-2xl p-8 md:p-10 border border-[var(--study-border)]">
+                <div className="bg-[var(--study-bg)] rounded-2xl p-8 md:p-10 border border-[var(--study-border)] mb-8">
                     <h3 className="text-xl font-bold text-[var(--study-text)] mb-6 flex items-center gap-2">
                         <BookOpen size={20} className="text-[var(--study-accent)]" />
                         {t.about.houseRules}
@@ -104,6 +119,31 @@ export function StudyAboutPage() {
                             <span>{t.about.rule4}</span>
                         </li>
                     </ul>
+                </div>
+
+                {/* Open Source Card */}
+                <div className="bg-[var(--study-bg)] rounded-2xl p-8 md:p-10 border border-[var(--study-border)]">
+                    <h3 className="text-xl font-bold text-[var(--study-text)] mb-6 flex items-center gap-2">
+                        <Github size={20} className="text-[var(--study-accent)]" />
+                        {openSourceText.title}
+                    </h3>
+                    <p className="text-[var(--study-text-muted)] text-sm leading-relaxed whitespace-pre-line mb-6">
+                        {openSourceText.desc}
+                    </p>
+                    <div className="flex flex-col items-start gap-1">
+                        <a
+                            href="https://github.com/dominiktyrnel/portfolio-studyhub"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 bg-[var(--study-surface)] border border-[var(--study-border)] text-[var(--study-text)] font-medium px-5 py-2.5 rounded-lg hover:bg-[var(--study-border)] transition-colors text-sm"
+                        >
+                            <Github size={16} />
+                            {openSourceText.button}
+                        </a>
+                        <span className="text-xs text-[var(--study-text-muted)] ml-1">
+                            {openSourceText.subtext}
+                        </span>
+                    </div>
                 </div>
 
             </div>

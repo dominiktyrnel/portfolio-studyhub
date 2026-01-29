@@ -118,10 +118,10 @@ export function StudyContactPage() {
                         {studyLang === 'kr' ? '이메일 (중요한 문의만)' : 'Email (for serious matters only)'}
                     </p>
                     <a
-                        href="mailto:your-email@example.com"
+                        href="mailto:dominiktyrnel@gmail.com"
                         className="text-[var(--study-accent)] hover:underline"
                     >
-                        your-email@example.com
+                        dominiktyrnel@gmail.com
                     </a>
                 </div>
             </div>

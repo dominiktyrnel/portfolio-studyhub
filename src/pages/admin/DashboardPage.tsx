@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db, auth } from "../../lib/firebase";
 import { logger } from '../../utils/logger';
+import { getKoreanDateString } from '../../utils/koreanTime';
 import { buildInfo } from "../../admin/buildInfo";
 import { BarChart3, Download, Eye, Server, RefreshCcw } from "lucide-react";
 import { BotStatusCard } from "../../components/admin/BotStatusCard";
@@ -46,7 +47,7 @@ export function DashboardPage() {
                 const totalData = totalSnap.exists() ? totalSnap.data() : {};
 
                 // Fetch Today Metrics
-                const todayStr = new Date().toISOString().split('T')[0];
+                const todayStr = getKoreanDateString();
                 const todayRef = doc(db, "metrics", `daily_${todayStr}`);
                 const todaySnap = await getDoc(todayRef);
                 const todayData = todaySnap.exists() ? todaySnap.data() : {};

@@ -394,7 +394,7 @@ export const contentEn = {
             "Visa/relocation process: to be discussed with the company."
         ],
         cta: "Contact via KakaoTalk",
-        email: "your-email@example.com",
+        email: "dominiktyrnel@gmail.com",
         kakaoId: "dominikt",
         kakaoLink: "https://open.kakao.com/o/sX8hY7bg",
         phone: "+420 XXX XXX XXX",
@@ -575,7 +575,7 @@ export const contentEn = {
             },
             contact: {
                 title: EN_COMMON.SECTION.CONTACT,
-                email: "your-email@example.com",
+                email: "dominiktyrnel@gmail.com",
                 kakaoId: "dominikt",
                 kakaoLink: "https://open.kakao.com/o/sX8hY7bg",
                 phoneCz: "+420 XXX XXX XXX",

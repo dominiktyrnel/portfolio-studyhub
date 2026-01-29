@@ -25,8 +25,8 @@ timeline_lock = threading.Lock()
 # =============================================================================
 # FIREBASE CONFIG
 # =============================================================================
-FIREBASE_PROJECT_ID = "YOUR_PROJECT_ID"
-FIREBASE_API_KEY = "YOUR_FIREBASE_API_KEY"
+FIREBASE_PROJECT_ID = "YOUR_PROJECT_ID"  # Get from Firebase Console
+FIREBASE_API_KEY = "YOUR_FIREBASE_API_KEY"  # Get from Firebase Console > Project Settings
 FIREBASE_URL = f"https://firestore.googleapis.com/v1/projects/{FIREBASE_PROJECT_ID}/databases/(default)/documents"
 
 # =============================================================================

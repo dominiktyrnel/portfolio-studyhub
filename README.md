@@ -124,7 +124,7 @@ It is published for **portfolio / reference viewing** only.
 This project is private. All rights reserved.
 
 📄 See [LICENSE](./LICENSE) for full terms.  
-📧 Permission requests: your-email@example.com
+📧 Permission requests: dominiktyrnel@gmail.com
 
 ---
 

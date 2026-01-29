@@ -49,6 +49,19 @@ interface BotChatConfig {
 }
 
 /**
+ * Timeline event labels (KR/EN) for timelineCompact
+ */
+const TIMELINE_LABELS: Record<string, { kr: string; en: string }> = {
+    'START': { kr: '🟢 시작', en: '🟢 Started' },
+    'STOP': { kr: '🔴 종료', en: '🔴 Stopped' },
+    'FOCUS': { kr: '⏳ 집중', en: '⏳ Focus' },
+    'SHORT_BREAK': { kr: '☕ 휴식', en: '☕ Break' },
+    'LONG_BREAK': { kr: '🧘‍♂️ 긴 휴식', en: '🧘‍♂️ Long Break' },
+    'PAUSE': { kr: '⏸️ 일시정지', en: '⏸️ Paused' },
+    'RESUME': { kr: '▶️ 재개', en: '▶️ Resumed' },
+};
+
+/**
  * YoutubeManager - Handles YouTube Live Chat API integration
  * 
  * Per BOT_Definice.md:
@@ -564,6 +577,14 @@ export class YoutubeManager {
                 await this.db.doc('runtime/obsPomodoro').set({
                     state: 'paused'
                 }, { merge: true });
+                // Update bot_status directly
+                await this.db.doc('bot_status/current').set({
+                    currentMode: 'Pause',
+                    mode: 'PAUSE',
+                    lastUpdatedAt: admin.firestore.Timestamp.now(),
+                    updatedAt: admin.firestore.Timestamp.now()
+                }, { merge: true });
+                await this.appendToTimeline('PAUSE');
                 await this.announceEvent('PAUSE');
                 break;
 
@@ -571,11 +592,13 @@ export class YoutubeManager {
                 await this.db.doc('runtime/obsPomodoro').set({
                     state: 'running'
                 }, { merge: true });
+                await this.appendToTimeline('RESUME');
                 await this.announceEvent('RESUME');
                 break;
 
             case 'stop':
                 await this.streamManager.setOffline();
+                await this.appendToTimeline('STOP');
                 await this.announceEvent('STOP');
                 break;
 
@@ -632,7 +655,10 @@ export class YoutubeManager {
                         updatedAt: nowTs
                     }, { merge: true });
 
-                    this.logger.info(`Admin forced phase: ${phase} (${remainingSeconds}s) → bot_status updated`);
+                    // Append to timeline for real-time web updates
+                    await this.appendToTimeline(legacyMode);
+
+                    this.logger.info(`Admin forced phase: ${phase} (${remainingSeconds}s) → bot_status + timeline updated`);
                 }
                 break;
             }
@@ -795,5 +821,64 @@ export class YoutubeManager {
         };
 
         await this.processMessage(adminMessage);
+    }
+
+    /**
+     * Append an event to bot_status/current.timelineCompact
+     * Used for real-time timeline updates on the web dashboard
+     * Uses Firestore transaction for deduplication (same event type within 5s is skipped)
+     */
+    private async appendToTimeline(eventType: string): Promise<void> {
+        const docRef = this.db.doc('bot_status/current');
+        const labels = TIMELINE_LABELS[eventType] || { kr: eventType, en: eventType };
+
+        const newItem = {
+            t: admin.firestore.Timestamp.now(),
+            type: eventType.toLowerCase(),
+            labelKR: labels.kr,
+            labelEN: labels.en,
+            by: 'admin' as const
+        };
+
+        try {
+            await this.db.runTransaction(async (transaction: FirebaseFirestore.Transaction) => {
+                const doc = await transaction.get(docRef);
+                const data = doc.data() || {};
+
+                // Get current timeline or initialize empty array
+                type TimelineItem = typeof newItem;
+                let timeline: TimelineItem[] = Array.isArray(data.timelineCompact)
+                    ? data.timelineCompact
+                    : [];
+
+                // Deduplication: skip if last event has same type and is < 5s old
+                if (timeline.length > 0) {
+                    const lastItem = timeline[timeline.length - 1];
+                    const lastTimeRaw = lastItem.t as { seconds?: number; _seconds?: number } | undefined;
+                    const lastTime = lastTimeRaw?.seconds ?? (lastTimeRaw as { _seconds?: number })?._seconds ?? 0;
+                    const newTime = newItem.t.seconds || 0;
+
+                    if (lastItem.type === newItem.type && Math.abs(newTime - lastTime) < 5) {
+                        this.logger.debug(`Skipping duplicate timeline event: ${eventType}`);
+                        return; // Skip duplicate
+                    }
+                }
+
+                // Add new item
+                timeline.push(newItem);
+
+                // Keep only last 30 items
+                if (timeline.length > 30) {
+                    timeline = timeline.slice(-30);
+                }
+
+                // Write back
+                transaction.update(docRef, { timelineCompact: timeline });
+            });
+
+            this.logger.info(`Timeline updated: ${eventType}`);
+        } catch (e) {
+            this.logger.error('Failed to update timelineCompact', e);
+        }
     }
 }

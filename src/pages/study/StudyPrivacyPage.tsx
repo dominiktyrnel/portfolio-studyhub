@@ -7,7 +7,7 @@ const privacyContentKR = `
 본 개인정보처리방침은 dominik.tyrnel.com 및 관련 서비스(학습 대시보드(/study), 스터디룸, 계정, FAQ/문의, 향후 알림 기능)에 적용됩니다.
 개인정보처리자(관리자): Dominik Tyrnel (개인)
 국가: 체코(유럽연합)
-문의 이메일: your-email@example.com
+문의 이메일: dominiktyrnel@gmail.com
 
 2) 수집하는 개인정보
 2.1 이용자가 제공하는 정보
@@ -45,7 +45,7 @@ FAQ/문의: 문의 처리 및 FAQ 관리 목적 달성 시까지(공개 동의�
 보안 로그: 보안/악용 방지를 위한 제한된 기간 동안.
 
 7) 이용자의 권리
-(EU/GDPR) 열람/정정/삭제/처리 제한/이동/이의 제기 및 동의 철회 요청이 가능합니다. 문의: your-email@example.com
+(EU/GDPR) 열람/정정/삭제/처리 제한/이동/이의 제기 및 동의 철회 요청이 가능합니다. 문의: dominiktyrnel@gmail.com
 체코 감독기관(ÚOOÚ)에 민원 제기가 가능합니다.
 (한국/PIPA) 한국에 거주하는 이용자는 PIPA에 따라 열람/정정/삭제/처리정지 요구 등의 권리를 행사할 수 있습니다.
 
@@ -61,7 +61,7 @@ const privacyContentEN = `
 This Privacy Policy applies to dominik.tyrnel.com and its related services (the "Service"), including: Study dashboard (/study), Study Room access, user accounts, FAQ/contact form, and future notifications.
 Controller: Dominik Tyrnel (individual)
 Country: Czech Republic (EU)
-Contact email: your-email@example.com
+Contact email: dominiktyrnel@gmail.com
 
 2) What personal data we collect
 2.1 Data you provide
@@ -102,7 +102,7 @@ Security logs: stored for a limited period necessary to prevent abuse and secure
 7) Your rights
 EEA/EU (GDPR): You can request access, correction, deletion, restriction, portability, object to processing, and withdraw consent.
 South Korea (PIPA): If you are in South Korea, you may have rights to request access, correction, deletion, and suspension of processing under PIPA.
-Contact: your-email@example.com
+Contact: dominiktyrnel@gmail.com
 
 8) Children
 The Service is not intended for children under 16. If you believe a child has provided personal data, contact us and we will remove it.

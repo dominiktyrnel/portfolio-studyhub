@@ -394,7 +394,7 @@ export const content = {
             "비자/거주 절차: 회사와 협의"
         ],
         cta: "카카오톡으로 연락하기",
-        email: "your-email@example.com",
+        email: "dominiktyrnel@gmail.com",
         kakaoId: "dominikt",
         kakaoLink: "https://open.kakao.com/o/sX8hY7bg",
         phone: "+420 XXX XXX XXX",
@@ -575,7 +575,7 @@ export const content = {
             },
             contact: {
                 title: KR_COMMON.SECTION.CONTACT,
-                email: "your-email@example.com",
+                email: "dominiktyrnel@gmail.com",
                 kakaoId: "dominikt",
                 kakaoLink: "https://open.kakao.com/o/sX8hY7bg",
                 phoneCz: "+420 XXX XXX XXX",

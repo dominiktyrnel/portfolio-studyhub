@@ -15,7 +15,7 @@ export const profile: Profile = {
     nameKr: "도미닉 티르넬",
     title: "Hands-on Construction Specialist",
     location: "체코(Brno)",
-    email: "your-email@example.com",
+    email: "dominiktyrnel@gmail.com",
     phoneCz: "+420 XXX XXX XXX",
     kakaoId: "dominikt",
     visa: "비자 협의 가능",

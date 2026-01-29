@@ -10,22 +10,30 @@ export function TimelineFeed({ events, lang }: TimelineFeedProps) {
 
     const formatTime = (ts: unknown) => {
         if (!ts) return '';
+
+        let date: Date | null = null;
+
         // Handle Firestore Timestamp
         if (typeof ts === 'object' && ts !== null && 'toDate' in ts && typeof (ts as { toDate: () => Date }).toDate === 'function') {
-            const date = (ts as { toDate: () => Date }).toDate();
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            date = (ts as { toDate: () => Date }).toDate();
         }
         // Handle Timestamp with seconds
-        if (typeof ts === 'object' && ts !== null && 'seconds' in ts) {
-            const date = new Date((ts as { seconds: number }).seconds * 1000);
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        else if (typeof ts === 'object' && ts !== null && 'seconds' in ts) {
+            date = new Date((ts as { seconds: number }).seconds * 1000);
         }
         // Handle _seconds (raw Firestore object)
-        if (typeof ts === 'object' && ts !== null && '_seconds' in ts) {
-            const date = new Date((ts as { _seconds: number })._seconds * 1000);
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        else if (typeof ts === 'object' && ts !== null && '_seconds' in ts) {
+            date = new Date((ts as { _seconds: number })._seconds * 1000);
         }
-        return '';
+
+        if (!date) return '';
+
+        // Format in Korean timezone (KST = Asia/Seoul)
+        return date.toLocaleTimeString('ko-KR', {
+            hour: '2-digit',
+            minute: '2-digit',
+            timeZone: 'Asia/Seoul'
+        });
     };
 
     // Motivational messages for each event type
