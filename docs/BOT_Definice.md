@@ -523,7 +523,7 @@ Example:
 env: {
   NODE_ENV: "production",
   HEARTBEAT_INTERVAL_MS: 60000, // if used at all
-  FIREBASE_PROJECT_ID: "tyrnel-web-portfolio",
+  FIREBASE_PROJECT_ID: "your-project-id",
 }
 ```
 

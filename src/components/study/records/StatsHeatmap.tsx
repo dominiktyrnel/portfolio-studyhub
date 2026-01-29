@@ -1,4 +1,7 @@
 
+
+import { getKoreanDate } from '../../../utils/koreanTime';
+
 interface HeatmapItem {
     date: string;
     count: number; // minutes
@@ -29,10 +32,10 @@ export function StatsHeatmap({ data, loading }: StatsHeatmapProps) {
     // We need a map for quick lookup
     const statsMap = new Map(data.map(d => [d.date, d.count]));
 
-    // Generate last 365 days
+    // Generate last 365 days in Korean time
     const days = [];
-    const end = new Date();
-    const start = new Date();
+    const end = getKoreanDate();
+    const start = getKoreanDate();
     start.setDate(start.getDate() - 364); // 52 weeks approx
 
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {

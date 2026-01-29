@@ -69,6 +69,12 @@ service cloud.firestore {
       allow write: if isAdmin(); // Admin only
     }
     
+    // Study Progress - admin-managed progress tracking
+    match /study_progress/current {
+      allow read: if true; // Public read for dashboard
+      allow write: if isAdmin(); // Admin only
+    }
+    
     // ==========================================
     // BOT STATUS & EVENTS (PUBLIC READ, SERVER WRITE)
     // ==========================================
@@ -125,6 +131,12 @@ service cloud.firestore {
     match /runtime/obsPomodoro {
       allow read: if true; // Public read for dashboard
       allow write: if true; // Allow OBS script to write (uses API key auth)
+    }
+    
+    // Timeline events - separate from timer to avoid conflicts
+    match /runtime/timeline {
+      allow read: if true; // Public read for dashboard
+      allow write: if true; // Allow OBS script to write
     }
     
     // Admin command buffer - for admin console commands

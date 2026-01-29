@@ -397,7 +397,7 @@ export const content = {
         email: "dominiktyrnel@gmail.com",
         kakaoId: "dominikt",
         kakaoLink: "https://open.kakao.com/o/sX8hY7bg",
-        phone: "+420 734 857 103",
+        phone: "+420 XXX XXX XXX",
         phoneKr: KR_COMMON.CONTACT_KR_PHONE,
         note: "연락: 이메일 / 카카오톡 (체코 거주 · 한국 번호 없음)"
     },
@@ -578,7 +578,7 @@ export const content = {
                 email: "dominiktyrnel@gmail.com",
                 kakaoId: "dominikt",
                 kakaoLink: "https://open.kakao.com/o/sX8hY7bg",
-                phoneCz: "+420 734 857 103",
+                phoneCz: "+420 XXX XXX XXX",
                 phoneKr: KR_COMMON.CONTACT_KR_PHONE,
                 note: "이메일이나 카카오톡으로 연락 주시면 빠르게 확인하겠습니다."
             }

@@ -94,16 +94,23 @@ export function StudyRoomPage() {
                     {/* Main Card */}
                     <div className="bg-[var(--study-surface)] rounded-2xl border border-[var(--study-border)] p-8 md:p-10 shadow-lg mb-8">
 
-                        {/* Enter Button */}
-                        <a
-                            href={ROOM_LINK}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-3 w-full bg-[var(--study-accent)] text-[var(--study-bg)] font-bold py-4 rounded-xl hover:bg-[var(--study-accent-sub)] transition-all shadow-md hover:shadow-lg text-lg mb-6 group"
-                        >
-                            {lang === 'kr' ? '입장하기' : 'Enter Room'}
-                            <ExternalLink size={20} className="group-hover:translate-x-1 transition-transform" />
-                        </a>
+                        {/* Enter Button - Auth-only */}
+                        {user ? (
+                            <a
+                                href={ROOM_LINK}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center gap-3 w-full bg-[var(--study-accent)] text-[var(--study-bg)] font-bold py-4 rounded-xl hover:bg-[var(--study-accent-sub)] transition-all shadow-md hover:shadow-lg text-lg mb-6 group"
+                            >
+                                {lang === 'kr' ? '입장하기' : 'Enter Room'}
+                                <ExternalLink size={20} className="group-hover:translate-x-1 transition-transform" />
+                            </a>
+                        ) : (
+                            <div className="flex items-center justify-center gap-3 w-full text-[var(--study-text-muted)] py-4 rounded-xl bg-[var(--study-bg)] border border-dashed border-[var(--study-border)] mb-6">
+                                <Lock size={18} />
+                                {t.now.linkHidden}
+                            </div>
+                        )}
 
                         {/* Password Section - Auth-only */}
                         <div className="bg-[var(--study-bg)] rounded-xl p-6 border border-[var(--study-border)]">

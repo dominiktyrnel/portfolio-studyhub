@@ -157,40 +157,41 @@ body {
    ========================================== */
 
 /* Background overrides */
-.study-scope[data-theme='dark'] .bg-study-bg,
-.study-scope[data-theme='dark'] .bg-\[var\(--study-bg\)\] {
+.study-scope[data-theme='dark'] .bg-study-bg {
     background-color: #1A1816 !important;
 }
 
-.study-scope[data-theme='dark'] .bg-study-surface,
-.study-scope[data-theme='dark'] .bg-\[var\(--study-surface\)\] {
+.study-scope[data-theme='dark'] .bg-study-surface {
     background-color: #262320 !important;
 }
 
-/* Text overrides */
-.study-scope[data-theme='dark'] .text-study-text,
-.study-scope[data-theme='dark'] .text-\[var\(--study-text\)\] {
-    color: #EBE5DA !important;
-}
-
-.study-scope[data-theme='dark'] .text-study-muted,
-.study-scope[data-theme='dark'] .text-\[var\(--study-text-muted\)\] {
-    color: #A69E94 !important;
-}
-
-/* Border overrides */
-.study-scope[data-theme='dark'] .border-study-border,
-.study-scope[data-theme='dark'] .border-\[var\(--study-border\)\] {
-    border-color: #3D3630 !important;
-}
-
-/* Accent overrides */
-.study-scope[data-theme='dark'] .bg-study-accent,
-.study-scope[data-theme='dark'] .bg-\[var\(--study-accent\)\] {
+.study-scope[data-theme='dark'] .bg-study-accent {
     background-color: #FF9F43 !important;
 }
 
-/* Inverted border for profile photo: dark border in day, light in night */
+/* Text overrides */
+.study-scope[data-theme='dark'] .text-study-text {
+    color: #EBE5DA !important;
+}
+
+.study-scope[data-theme='dark'] .text-study-muted {
+    color: #A69E94 !important;
+}
+
+.study-scope[data-theme='dark'] .text-study-accent {
+    color: #FF9F43 !important;
+}
+
+/* Border overrides */
+.study-scope[data-theme='dark'] .border-study-border {
+    border-color: #3D3630 !important;
+}
+
+.study-scope[data-theme='dark'] .border-study-accent {
+    border-color: #FF9F43 !important;
+}
+
+/* Inverted border for profile photo */
 .study-scope .border-study-inverted {
     border-color: #3D3630;
 }
@@ -199,13 +200,42 @@ body {
     border-color: #EBE5DA !important;
 }
 
-/* Header background fix for dark mode with opacity */
+/* Background opacity variations */
 .study-scope[data-theme='dark'] .bg-study-surface\/50 {
     background-color: rgba(38, 35, 32, 0.5) !important;
 }
 
+.study-scope[data-theme='dark'] .bg-study-surface\/80 {
+    background-color: rgba(38, 35, 32, 0.8) !important;
+}
+
+.study-scope[data-theme='dark'] .bg-study-surface\/95 {
+    background-color: rgba(38, 35, 32, 0.95) !important;
+}
+
+.study-scope[data-theme='dark'] .bg-study-bg\/50 {
+    background-color: rgba(26, 24, 22, 0.5) !important;
+}
+
+.study-scope[data-theme='dark'] .bg-study-bg\/80 {
+    background-color: rgba(26, 24, 22, 0.8) !important;
+}
+
 .study-scope[data-theme='dark'] .bg-study-bg\/95 {
     background-color: rgba(26, 24, 22, 0.95) !important;
+}
+
+/* Hover states for dark mode */
+.study-scope[data-theme='dark'] .hover\:bg-study-border:hover {
+    background-color: #3D3630 !important;
+}
+
+.study-scope[data-theme='dark'] .hover\:bg-study-bg:hover {
+    background-color: #1A1816 !important;
+}
+
+.study-scope[data-theme='dark'] .hover\:text-study-text:hover {
+    color: #EBE5DA !important;
 }
 
 

@@ -16,6 +16,7 @@ import { LanguageProvider } from "./i18n/LanguageContext";
 
 import StudyBotPage from './pages/admin/StudyBotPage';
 import StudyPlanEditor from './pages/admin/StudyPlanEditor';
+import StudyProgressAdmin from './pages/admin/StudyProgressAdmin';
 import { StudyFAQEditor } from "./pages/admin/StudyFAQEditor";
 import { RoomSettingsEditor } from "./pages/admin/RoomSettingsEditor";
 import { StudyGlobalSettingsEditor } from "./pages/admin/StudyGlobalSettingsEditor";
@@ -38,7 +39,7 @@ import { AdminThemeWrapper } from "./components/admin/AdminThemeWrapper";
 // Study Section Imports - Lazy Loaded
 const StudyLayout = lazy(() => import("./layouts/StudyLayout"));
 import { StudyDashboard } from "./pages/study/StudyDashboard";
-import { StudyPlanPage } from "./pages/study/StudyPlanPage";
+import StudyPlanPage from "./pages/study/StudyPlanPage";
 import { StudyRecordsPage } from "./pages/study/StudyRecordsPage";
 import { StudyRoomPage } from "./pages/study/StudyRoomPage";
 import { StudyAboutPage } from "./pages/study/StudyAboutPage";
@@ -253,6 +254,16 @@ function App() {
               <AdminThemeWrapper>
                 <RequireAuth>
                   <StudyPlanEditor />
+                </RequireAuth>
+              </AdminThemeWrapper>
+            }
+          />
+          <Route
+            path="/admin/study-progress"
+            element={
+              <AdminThemeWrapper>
+                <RequireAuth>
+                  <StudyProgressAdmin />
                 </RequireAuth>
               </AdminThemeWrapper>
             }

@@ -37,15 +37,21 @@ export function GooroomeeCard({ lang }: GooroomeeCardProps) {
             </p>
 
             <div className="space-y-3">
-                <a
-                    href={ROOM_LINK}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-[var(--study-bg)] text-[var(--study-text)] font-bold py-3 rounded-lg hover:bg-[var(--study-border)] transition-colors shadow-xs"
-                >
-                    {lang === 'kr' ? '입장하기' : 'Enter Room'}
-                    <ExternalLink size={16} />
-                </a>
+                {user ? (
+                    <a
+                        href={ROOM_LINK}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-center gap-2 w-full bg-[var(--study-bg)] text-[var(--study-text)] font-bold py-3 rounded-lg hover:bg-[var(--study-border)] transition-colors shadow-xs"
+                    >
+                        {lang === 'kr' ? '입장하기' : 'Enter Room'}
+                        <ExternalLink size={16} />
+                    </a>
+                ) : (
+                    <div className="flex items-center justify-center gap-2 w-full text-[var(--study-text-muted)] text-sm py-3 rounded-lg bg-[var(--study-bg)] border border-dashed border-[var(--study-border)]">
+                        {t.now.linkHidden}
+                    </div>
+                )}
 
                 {/* Password - Hidden for non-authenticated users */}
                 <div className="flex items-center justify-between text-xs bg-study-surface px-3 py-2 rounded-lg border border-study-border">

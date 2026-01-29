@@ -3,6 +3,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../lib/firebase';
 import type { StudySchedule } from '../types/study-db';
 import { logger } from '../utils/logger';
+import { getKoreanDayOfWeek } from '../utils/koreanTime';
 
 const DAY_NAMES = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] as const;
 
@@ -52,7 +53,7 @@ export function useStudySchedule() {
     // Get today's schedule text
     const getTodaySchedule = (): string => {
         if (!schedule) return '';
-        const today = DAY_NAMES[new Date().getDay()];
+        const today = DAY_NAMES[getKoreanDayOfWeek()];
         return schedule.days[today] || '';
     };
 

@@ -2,8 +2,82 @@
 
 ## Version History & Recent Fixes
 
-**Current Version**: 3.0  
-**Last Updated**: December 27, 2024
+**Current Version**: 3.1  
+**Last Updated**: December 27, 2025
+
+---
+
+## [3.1] - December 27, 2025 - PWA & Dark Theme & Korean Time
+
+### 🚀 Major Features
+
+#### PWA Install Button (Always Visible)
+
+- New `usePWAInstall.ts` hook for PWA installation handling
+- "Install App" button always visible in Study Hub footer
+- Platform-specific instructions (iOS Safari, Android Chrome)
+- Bilingual alerts (Korean + English)
+
+#### Admin Panel Dark Theme Fixes
+
+- Fixed 15+ files with hardcoded light theme colors
+- Replaced all hardcoded colors with admin tokens
+- Files fixed: StickySaveBar, ImportExportPage, StudyScheduleEditor, PortfolioEditorPage Meta Panel
+
+#### Korean Standard Time (KST)
+
+- New `src/utils/koreanTime.ts` utility
+- All user-facing dates/times now use KST (UTC+9)
+- Updated: useStudySchedule, StatsHeatmap, useMetrics, DashboardPage
+
+#### Open Source Card on About Page
+
+- New GitHub card on `/study/about` page
+- Bilingual (KR/EN) with GitHub icon
+- Link to public repo: github.com/dominiktyrnel/portfolio-studyhub
+
+#### Timeline Real-Time Updates (OBS → Web)
+
+- **New document**: `runtime/timeline` - separate from timer to avoid data conflicts
+- OBS script writes timeline events directly to Firestore via REST API
+- Web hook has dedicated `onSnapshot` listener for instant updates
+- Timeline displays in Korean timezone (Asia/Seoul)
+- Motivational messages without emoji (web has its own icons)
+- Events: START, STOP, FOCUS, SHORT_BREAK, LONG_BREAK, PAUSE, RESUME, COMPLETED
+
+### 🗑️ File Cleanup
+
+Removed obsolete files:
+
+- `.env.development.bak`, `.env.staging`
+- `tyrnel_site_settings.json`
+- `public/vite.svg`
+- `public/img/favicon/` (duplicate icons)
+- `firestore-data/`, `firestore-import/` (old exports)
+- `docs/client_secret*.json` (sensitive data)
+
+### 📁 New Files
+
+- `src/utils/koreanTime.ts` - Korean timezone utilities
+- `src/hooks/usePWAInstall.ts` - PWA installation hook
+- `public/icon-maskable-192.png`, `public/icon-maskable-512.png` - PWA icons
+- `README.md` (root) - GitHub landing page
+- `docs/lua_scripts_bot/clear-timeline.py` - Script for clearing old timeline data
+
+### 🔧 Modified Files
+
+- `src/layouts/StudyLayout.tsx` - Added PWA install button
+- `src/pages/study/StudyAboutPage.tsx` - Added Open Source card
+- `src/styles/global.css` - Added overflow-x: hidden for mobile
+- `public/manifest.json` - Fixed screenshots and SVG purpose
+- `public/sw.js` - Cache version v3 for icon refresh
+- `index.html` - Added apple-touch-icon link
+- `docs/QUICKSTART.md` - Fixed broken links
+- `docs/lua_scripts_bot/pomodoro-timer.py` - Added timeline events to `runtime/timeline`
+- `src/hooks/useStudyStatus.ts` - New listener for `runtime/timeline`
+- `src/components/study/dashboard/TimelineFeed.tsx` - Korean timezone (Asia/Seoul)
+- `firestore.rules` - Added `runtime/timeline` document
+- `docs/DATA_MODEL.md` - Added `runtime/timeline` schema (v3.1)
 
 ---
 

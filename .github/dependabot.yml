@@ -1,0 +1,91 @@
+# Dependabot Configuration
+# Automatically creates PRs for dependency updates
+# Docs: https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+version: 2
+updates:
+  # Frontend (React/Vite) - Root package.json
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Prague"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "deps"
+    labels:
+      - "dependencies"
+      - "frontend"
+    groups:
+      react:
+        patterns:
+          - "react*"
+          - "@types/react*"
+      firebase:
+        patterns:
+          - "firebase*"
+          - "@firebase/*"
+      tailwind:
+        patterns:
+          - "tailwindcss*"
+          - "postcss*"
+          - "autoprefixer*"
+      vite:
+        patterns:
+          - "vite*"
+          - "@vitejs/*"
+      typescript:
+        patterns:
+          - "typescript*"
+          - "@types/*"
+
+  # Firebase Cloud Functions
+  - package-ecosystem: "npm"
+    directory: "/functions"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Prague"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(functions)"
+    labels:
+      - "dependencies"
+      - "functions"
+
+  # Study Bot (Node.js backend)
+  - package-ecosystem: "npm"
+    directory: "/study_bot"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Prague"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps(bot)"
+    labels:
+      - "dependencies"
+      - "study-bot"
+    groups:
+      firebase-admin:
+        patterns:
+          - "firebase-admin*"
+      googleapis:
+        patterns:
+          - "googleapis*"
+          - "google-auth*"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "dependencies"
+      - "github-actions"

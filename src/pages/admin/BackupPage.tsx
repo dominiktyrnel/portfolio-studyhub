@@ -142,7 +142,7 @@ export function BackupPage() {
             batch.set(doc(db!, "content", "global"), {
                 contact: {
                     email: "dominik@tyrnel.com",
-                    phoneCz: "+420 734 857 103",
+                    phoneCz: "+420 XXX XXX XXX",
                     kakaoId: "dominikt"
                 }
             });

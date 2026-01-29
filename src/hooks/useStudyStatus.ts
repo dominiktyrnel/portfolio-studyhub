@@ -106,36 +106,7 @@ export function useStudyStatus() {
             } as BotStatus;
 
             setStatus(normalizedStatus);
-
-            // Process timeline from timelineCompact
-            const timelineFromStatus = (rawData.timelineCompact as Array<{
-                type: string;
-                t: { seconds: number };
-                labelKR: string;
-                labelEN: string;
-                by: string;
-            }>) ?? [];
-
-            if (timelineFromStatus.length > 0) {
-                // Type assertion needed because timelineCompact has flexible types
-                // while StudyEvent has strict enum
-                const timelineEvents = timelineFromStatus
-                    .slice(-10)
-                    .reverse()
-                    .map((item, idx) => ({
-                        id: `timeline_${idx}`,
-                        type: item.type?.toUpperCase() || 'FOCUS_START',
-                        createdAt: Timestamp.fromMillis(item.t.seconds * 1000),
-                        dayKey: new Date(item.t.seconds * 1000).toISOString().split('T')[0],
-                        streamId: null,
-                        metadata: {
-                            labelKR: item.labelKR,
-                            labelEN: item.labelEN,
-                            by: item.by
-                        }
-                    })) as StudyEvent[];
-                setFeed(timelineEvents);
-            }
+            // Note: Timeline is now handled by separate listener for runtime/timeline document
         };
 
         // Default offline status
@@ -199,6 +170,51 @@ export function useStudyStatus() {
             }
         );
 
+        // 3. REAL-TIME LISTENER: runtime/timeline (for timeline events from OBS script)
+        const unsubscribeTimeline = onSnapshot(
+            doc(db!, 'runtime', 'timeline'),
+            (snapshot) => {
+                if (snapshot.exists()) {
+                    const data = snapshot.data();
+                    const items = data.items as Array<{
+                        type: string;
+                        t: { seconds: number } | { _seconds: number };
+                        labelKR: string;
+                        labelEN: string;
+                        by: string;
+                    }> | undefined;
+
+                    console.log('[Timeline] Items from runtime/timeline:', items?.length ?? 0);
+
+                    if (items && items.length > 0) {
+                        const timelineEvents = items
+                            .slice(-10)
+                            .reverse()
+                            .map((item, idx) => {
+                                const timeRaw = item.t as { seconds?: number; _seconds?: number };
+                                const seconds = timeRaw?.seconds ?? timeRaw?._seconds ?? 0;
+                                return {
+                                    id: `timeline_${idx}`,
+                                    type: item.type?.toUpperCase() || 'FOCUS_START',
+                                    createdAt: Timestamp.fromMillis(seconds * 1000),
+                                    dayKey: new Date(seconds * 1000).toISOString().split('T')[0],
+                                    streamId: null,
+                                    metadata: {
+                                        labelKR: item.labelKR,
+                                        labelEN: item.labelEN,
+                                        by: item.by
+                                    }
+                                };
+                            }) as StudyEvent[];
+                        setFeed(timelineEvents);
+                    }
+                }
+            },
+            (err) => {
+                logger.error(new Error(`[useStudyStatus] timeline listener error: ${getErrorMessage(err)}`));
+            }
+        );
+
         // 3. POLLING: stream_stats/current (bot writes every 30s, no need for real-time)
         const fetchStats = async () => {
             try {
@@ -222,6 +238,7 @@ export function useStudyStatus() {
         return () => {
             unsubscribeBotStatus();
             unsubscribeObs();
+            unsubscribeTimeline();
             clearInterval(statsInterval);
         };
         // Note: obsData intentionally excluded from deps - we pass it directly to processBotStatus

@@ -33,6 +33,7 @@ export const studyTranslations = {
             watchNow: '바로 보기',
             timelineEmpty: '세션이 시작되면 Focus/Break 기록이 여기에 남아요.',
             passwordHidden: '비밀번호는 로그인 후 표시됩니다.',
+            linkHidden: '로그인 후 입장 가능합니다.',
             viewRules: '규칙 보기',
         },
         // Records page
@@ -304,6 +305,7 @@ export const studyTranslations = {
             watchNow: 'Watch Now',
             timelineEmpty: 'When a session starts, Focus/Break events will appear here.',
             passwordHidden: 'Password shown after login.',
+            linkHidden: 'Log in to enter the room.',
             viewRules: 'View Rules',
         },
         // Records page
